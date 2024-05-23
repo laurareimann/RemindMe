@@ -10,7 +10,6 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { useColorScheme } from "@/components/useColorScheme";
 import { GluestackUIProvider, Text } from "./../components";
-import { config } from "@gluestack-ui/config"; // Optional if you want to use default theme
 
 export {
   // Catch any errors thrown by the Layout component.

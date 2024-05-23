@@ -27,9 +27,9 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true),
       }}>
       <Tabs.Screen
-        name="index"
+        name="firestore-demo"
         options={{
-          title: 'Tab One',
+          title: 'Firestore Demo',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>
@@ -48,7 +48,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="api-demo"
         options={{
           title: 'API Demo',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
