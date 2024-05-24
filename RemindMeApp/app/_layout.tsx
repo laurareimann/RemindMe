@@ -44,7 +44,9 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 function RootLayoutNav() {
+
   const colorScheme = useColorScheme();
+
   return (
     <GluestackUIProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
