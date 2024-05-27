@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { Button, View, Text, Card, HStack, Divider, Spinner, Center } from "../../components";
 import { useState } from "react";
 
-export default function TabTwoScreen() {
+export default function apiDemo() {
   const placeholderData = {
     "Summary": "Clear",
     "Preciptation Probability": 0.0,

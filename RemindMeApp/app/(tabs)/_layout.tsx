@@ -48,7 +48,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="api-demo"
         options={{
           title: 'API Demo',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
