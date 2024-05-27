@@ -9,8 +9,10 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { useColorScheme } from "@/components/useColorScheme";
-import { GluestackUIProvider, Text } from "./../components";
-import { config } from "@gluestack-ui/config"; // Optional if you want to use default theme
+import { GluestackUIProvider, SafeAreaView, Text } from "./../components";
+import { usePushNotifications } from '../usePushNotifications';
+import { StatusBar } from "expo-status-bar";
+
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -47,9 +49,14 @@ function RootLayoutNav() {
 
   const colorScheme = useColorScheme();
 
+  const { expoPushToken, notification } = usePushNotifications();
+  const data = JSON.stringify(notification, undefined, 2);
+
   return (
     <GluestackUIProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Text pt="$5" >Token: {expoPushToken?.data ?? ""}</Text>
+        <Text>Notification: {data}</Text>
         <Stack>
           <Stack.Screen
             name="(tabs)"

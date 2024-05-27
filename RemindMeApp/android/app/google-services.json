@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "615464236469",
-    "project_id": "remindme-6c207",
-    "storage_bucket": "remindme-6c207.appspot.com"
+    "project_number": "450967273921",
+    "project_id": "remind-me-76b5b",
+    "storage_bucket": "remind-me-76b5b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:615464236469:android:0b2bb52356df281db455fc",
+        "mobilesdk_app_id": "1:450967273921:android:f2f4ccb1d4a2f7ef3bef40",
         "android_client_info": {
-          "package_name": "remind.me"
+          "package_name": "com.mosy.remindme"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC6xaXiebCwSP5JseKyST3E09z7ds6M3dI"
+          "current_key": "AIzaSyB-yGWjxCwDKSlxBRm97XmjjmzJhv1wDmw"
         }
       ],
       "services": {

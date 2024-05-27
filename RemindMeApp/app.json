@@ -16,14 +16,6 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.lreimann.RemindMeApp"
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.lreimann.RemindMeApp",
-      "googleServicesFile": "./android/app/google-services.json"
-    },
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -40,8 +32,12 @@
         "origin": false
       },
       "eas": {
-        "projectId": "d7e65acd-01b0-4c30-8562-a674959ad681"
+        "projectId": "29a1b4d3-df54-492b-8c59-3fccadf01caf"
       }
+    },
+    "android": {
+      "package": "com.lreimann.RemindMeApp",
+      "googleServicesFile": "./android/app/google-services.json"
     }
   }
 }
