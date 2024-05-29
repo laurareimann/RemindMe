@@ -27,6 +27,7 @@ import { PlannedReminderDummyData } from "@/types/reminder";
 import { useState } from "react";
 import PageView from "@/custom-components/templates";
 import { Alert } from "react-native";
+import PlannedRoutineAccordion from "@/custom-components/plannedRoutineAccordion";
 
 export default function TabOneScreen() {
   const [routines, setRoutines] = useState(PlannedReminderDummyData);
@@ -68,94 +69,16 @@ export default function TabOneScreen() {
       </Box>
       <Box pt="$5">
         <Heading size={"lg"}>My Routines</Heading>
-        <ScrollView style={{ flexGrow: 1}}>
-          {routines?.map((toDo, index) => {
+        <ScrollView style={{ flexGrow: 1/* , backgroundColor: "red" */ }}>
+          {routines?.map((routine, index) => {
             return (
-              <Accordion
+              <PlannedRoutineAccordion
                 key={index}
-                m="$2.5"
-                width="90%"
-                size="md"
-                variant="filled"
-                type="single"
-              >
-                <AccordionItem value={index.toString()}>
-                  <AccordionHeader>
-                    <AccordionTrigger>
-                      {({ isExpanded }) => {
-                        const statefulColor = toDo.isActive ? "black" : "grey";
-                        return (
-                          <>
-                            <Icon
-                              as={toDo.icon}
-                              mr="$1.5"
-                              color={statefulColor}
-                            />
-                            <AccordionTitleText color={statefulColor}>
-                              {toDo.message}
-                            </AccordionTitleText>
-                            {isExpanded ? (
-                              <AccordionIcon
-                                as={ChevronUpIcon}
-                                color={statefulColor}
-                              />
-                            ) : (
-                              <AccordionIcon
-                                as={ChevronDownIcon}
-                                color={statefulColor}
-                              />
-                            )}
-                            <Switch
-                              size="sm"
-                              value={toDo.isActive}
-                              onToggle={() =>
-                                handleSwitchToggle(index)
-                              } /* todo: onToggle={} ... manipulate isActive value */
-                            />
-                          </>
-                        );
-                      }}
-                    </AccordionTrigger>
-                  </AccordionHeader>
-                  <AccordionContent>
-                    <VStack space="sm" p={3}>
-                      {/* Repeats Section */}
-                      {/* Todo: ReWork this here */}
-                      <HStack alignItems="center" space="sm">
-                        <Button onPress={() => handleDeleteRoutine(index)}>
-                          <Icon as={TrashIcon} color="red" />
-                        </Button>
-                        <Icon as={ClockIcon} size="sm" />
-                        <Text>
-                          {Array.isArray(toDo.Repeats.time)
-                            ? toDo.Repeats.time.join(", ")
-                            : toDo.Repeats.time}
-                        </Text>
-                      </HStack>
-                      <Text>
-                        {Object.keys(toDo.Repeats.days)
-                          .filter((day) => toDo.Repeats.days[day])
-                          .join(", ")}
-                      </Text>
-
-                      {/* Weather Section */}
-                      {/* Todo: ReWork this here */}
-                      <HStack alignItems="center" space="sm">
-                        <Icon as={SunIcon} size="sm" />
-                        <Text>
-                          {Array.isArray(toDo.weather.weatherConditions)
-                            ? toDo.weather.weatherConditions.join(", ")
-                            : toDo.weather.weatherConditions}
-                        </Text>
-                      </HStack>
-                      <Text>
-                        {toDo.temperature.isMin ? "min" : "max"}{" "}
-                        {toDo.temperature.celsius}°C
-                      </Text>
-                    </VStack>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+                routine={routine}
+                routineIndex={index}
+                handleSwitchToggle={() => handleSwitchToggle(index)}
+                handleDeleteRoutine={() => handleDeleteRoutine(index)}
+              />
             );
           })}
         </ScrollView>
