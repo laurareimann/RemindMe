@@ -1,14 +1,17 @@
 import { StyleSheet } from "react-native";
-import { Box, View, Text, Switch, HStack } from "./../../components";
+import { Card, View, Text } from "./../../components";
+import { usePushNotifications } from "./../../usePushNotifications";
 
 export default function TabOneScreen() {
+  const { expoPushToken, notification } = usePushNotifications();
+  const data = JSON.stringify(notification, undefined, 2);
+
   return (
     <View style={styles.container}>
-      <Box bg="$primary500" p="$5"><Switch size="md" isDisabled={false} />
-        <HStack space="md" reversed={false} >
-          <Text color="white" >This is the Box</Text>
-        </HStack>
-      </Box>
+      <Card p="$5">
+        <Text>Token: {expoPushToken?.data ?? ""}</Text>
+        <Text>Notification: {data}</Text>
+      </Card>
     </View>
   );
 }

@@ -10,7 +10,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { useColorScheme } from "@/components/useColorScheme";
 import { GluestackUIProvider, Text } from "./../components";
-import { config } from "@gluestack-ui/config"; // Optional if you want to use default theme
+import { usePushNotifications } from "./../usePushNotifications";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -43,6 +43,7 @@ export default function RootLayout() {
   }
   return <RootLayoutNav />;
 }
+
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
   return (
