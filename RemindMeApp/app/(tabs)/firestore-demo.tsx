@@ -3,18 +3,16 @@ import { Box, View, Text, Button, VStack, HStack, Card, Divider, Center, Spinner
 
 // ------ Firebase -------
 
-import { initializeApp } from 'firebase/app';
+import { initializeApp  } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyB-yGWjxCwDKSlxBRm97XmjjmzJhv1wDmw',
-  authDomain: 'remind-me-76b5b.firebaseapp.com',
-  databaseURL: 'https://remind-me-76b5b.firebaseio.com',
-  projectId: 'remind-me-76b5b',
-  storageBucket: 'remind-me-76b5b.appspot.com',
-  messagingSenderId: 'sender-id',
-  appId: '1:450967273921:android:f2f4ccb1d4a2f7ef3bef40',
-  measurementId: 'G-measurement-id',
+  apiKey: "AIzaSyCnht2-k29OLuuADU_H5i5mEorwIOFNX5Y",
+  authDomain: "remind-me-76b5b.firebaseapp.com",
+  projectId: "remind-me-76b5b",
+  storageBucket: "remind-me-76b5b.appspot.com",
+  messagingSenderId: "450967273921",
+  appId: "1:450967273921:web:da2e889b8fba03a43bef40"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
