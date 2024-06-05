@@ -1,5 +1,4 @@
-import { CalendarDaysIcon, Camera, DownloadIcon, LucideIcon, MessageCircleIcon } from "lucide-react-native";
-import { ReactElement } from "react";
+import { CalendarDaysIcon, DownloadIcon, LucideIcon, MessageCircleIcon } from "lucide-react-native";
 
 type week = {
   Monday: boolean;
@@ -20,7 +19,8 @@ export type RoutinePlanned = {
   message: string;
   isActive: boolean;
   Repeats: {
-    time: string | string[]; // Allows for one or more times per day
+    time: string | string[]; 
+    // Allows for one or more times per day
     // maybe more than one time to remind more than one time per day
     // maybe random time which is invisible to create random reminder
     days: week;
