@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
-import { Box, View, Text, Button, VStack, HStack, Card, Divider, Center, Spinner } from "../../components";
+import { Box, View, Text, Button, VStack, HStack, Card, Divider, Center, Spinner, ScrollView, Icon, CalendarDaysIcon} from "../../components";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 // ------ Firebase -------
 
 import { initializeApp  } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { DocumentData, getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCnht2-k29OLuuADU_H5i5mEorwIOFNX5Y",
@@ -20,56 +21,80 @@ const db = getFirestore(firebaseApp);
 
 // ------ Firebase -------
 
-import { addDoc, collection } from "firebase/firestore"; 
+import { addDoc, collection, getDocs } from "firebase/firestore"; 
 import { useState } from "react";
 
 export default function TabOneScreen() {
-  const [response, setResponse] = useState("This is the response");
+  const [documents, setDocuments] = useState<DocumentData[]>([ { first: "Alan", middle: "Mathison", last: "Turing", born: 1912 } ]); 
   const [loading, setLoading] = useState(false);
 
-  const upload = async () => {
+  const getAllDocs = async () => {
     setLoading(true);
     try {
-      const docRef = await addDoc(collection(db, "users"), {
+      const querySnapshot = await getDocs(collection(db, "users"));
+      const entrys: DocumentData[] = [];
+      querySnapshot.forEach((doc) => {
+        entrys.push(doc.data());
+      });
+      setDocuments(entrys);
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+    }
+  }
+
+  const createDoc = async () => {
+    setLoading(true);
+    try {
+      await addDoc(collection(db, "users"), {
         first: "Alan",
         middle: "Mathison",
         last: "Turing",
         born: 1912
       });
-      setResponse("Document written with ID: " + docRef.id);
       setLoading(false);
     } catch (e) {
-      setResponse("Error adding document: " + e);
       setLoading(false);
     }
   };
 
+  const deleteDoc = async () => {
+    
+  }
+
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <VStack space="2xl">
         <Card p="$5" m="$5" width="90%" >
-          <View>
-              <Text color="black" fontWeight="$medium" >{response}</Text>
-          </View>
+          {documents.map((doc, index) => (
+            <View key={index}>
+              <HStack key={doc.id} space="xl" py="$2">
+                <Text>{doc.first} {doc.middle} {doc.last}</Text>
+                <FontAwesome size={20} color="black" name="remove" style={styles.icon}/>
+              </HStack>
+            </View>
+          ))}
           {loading &&
             <Center rounded="$xl" style={styles.loadAnimation}>
               <Spinner size="large" ></Spinner>
             </Center>
           }
         </Card>
-        <Button action="primary" size="lg" rounded="$full" hardShadow="1" onPress={upload}>
-          <Text color="$light100" >Create Document</Text>
+        <Button action="primary" size="lg" rounded="$full" hardShadow="1" onPress={() => createDoc().then(() => getAllDocs()) }>
+          <Text color="$light100" >Add Document</Text>
         </Button>
       </VStack>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  icon: {
+    marginBottom: -3,
   },
   loadAnimation: { 
     zIndex: 1, 
