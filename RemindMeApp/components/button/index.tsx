@@ -7,18 +7,25 @@ const StyledRoot = styled(
   Pressable,
   {
     'borderRadius': '$sm',
-    'backgroundColor': '$primary500',
+    'backgroundColor': 'black',
     'flexDirection': 'row',
     'justifyContent': 'center',
     'alignItems': 'center',
 
     '_text': {
-      color: '$text0',
+      color: 'white',
       fontWeight: '$semibold',
+      variants: {
+        bg: {
+          transparent: {
+            color: 'black',
+          },
+        },
+      },
     },
 
     '_icon': {
-      color: '$text0',
+      color: 'white',
     },
 
     '_spinner': {
@@ -30,51 +37,51 @@ const StyledRoot = styled(
     'variants': {
       action: {
         primary: {
-          'bg': '$primary500',
-          'borderColor': '$primary300',
+          'bg': 'black',
+          'borderColor': 'black',
 
           ':hover': {
-            bg: '$primary600',
-            borderColor: '$primary400',
+            bg: '#333333',
+            borderColor: '#333333',
           },
 
           ':active': {
-            bg: '$primary700',
-            borderColor: '$primary700',
+            bg: '#393939',
+            borderColor: '#393939',
           },
 
           '_text': {
-            'color': '$primary600',
+            'color': 'white',
             ':hover': {
-              color: '$primary600',
+              color: 'white',
             },
             ':active': {
-              color: '$primary700',
+              color: 'white',
             },
           },
 
           '_icon': {
-            'color': '$primary600',
+            'color': 'white',
             ':hover': {
-              color: '$primary600',
+              color: 'white',
             },
             ':active': {
-              color: '$primary700',
+              color: 'white',
             },
           },
 
           '_spinner': {
             'props': {
-              color: '$primary600',
+              color: 'white',
             },
             ':hover': {
               props: {
-                color: '$primary600',
+                color: 'white',
               },
             },
             ':active': {
               props: {
-                color: '$primary700',
+                color: 'white',
               },
             },
           },
@@ -247,7 +254,7 @@ const StyledRoot = styled(
         },
         outline: {
           'bg': 'transparent',
-          'borderWidth': '$1',
+          'borderWidth': '$2',
 
           ':hover': {
             bg: '$background50',

@@ -332,7 +332,7 @@ const StyledIcon = styled(
     },
   }
 );
-const StyledContent = styled(View, { px: '$5', mt: '$2', pb: '$5' });
+const StyledContent = styled(View, { px: '$5', pt: '$3', pb: '$5', borderTopWidth: 1, borderColor: '$gray300' });
 
 export const Accordion = createAccordion({
   Root: StyleRoot,

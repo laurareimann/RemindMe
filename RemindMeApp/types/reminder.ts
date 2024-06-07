@@ -112,4 +112,54 @@ export const PlannedReminderDummyData: RoutinePlanned[] = [
       isMin: false,
     },
   },
+  {
+    icon: DownloadIcon,
+    message: "Dress Warmly2",
+    isActive: false,
+    Repeats: {
+      time: "08:00",
+      days: {
+        Monday: false,
+        Tuesday: false,
+        Wednesday: false,
+        Thursday: false,
+        Friday: false,
+        Saturday: true,
+        Sunday: true,
+      },
+    },
+    weather: {
+      location: { latitude: 60.1695, longitude: 24.9354 }, // Helsinki coords
+      weatherConditions: ["snow"],
+    },
+    temperature: {
+      celsius: -5, // Maximum temperature -5°C
+      isMin: false,
+    },
+  },
+  {
+    icon: DownloadIcon,
+    message: "Dress Warmly3",
+    isActive: false,
+    Repeats: {
+      time: "08:00",
+      days: {
+        Monday: false,
+        Tuesday: false,
+        Wednesday: false,
+        Thursday: false,
+        Friday: false,
+        Saturday: true,
+        Sunday: true,
+      },
+    },
+    weather: {
+      location: { latitude: 60.1695, longitude: 24.9354 }, // Helsinki coords
+      weatherConditions: ["snow"],
+    },
+    temperature: {
+      celsius: -5, // Maximum temperature -5°C
+      isMin: false,
+    },
+  },
 ];

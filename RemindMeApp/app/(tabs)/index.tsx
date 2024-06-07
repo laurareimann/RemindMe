@@ -1,33 +1,15 @@
-import {
-  Box,
-  View,
-  Text,
-  Switch,
-  HStack,
-  Heading,
-  Accordion,
-  ChevronUpIcon,
-  ChevronDownIcon,
-  AccordionItem,
-  AccordionHeader,
-  AccordionContent,
-  AccordionContentText,
-  AccordionIcon,
-  AccordionTitleText,
-  AccordionTrigger,
-  Icon,
-  VStack,
-  SunIcon,
-  ClockIcon,
-  ScrollView,
-  Button,
-  TrashIcon,
-} from "./../../components";
+import PlannedRoutineAccordion from "@/custom-components/plannedRoutineAccordion";
+import PageView from "@/custom-components/templates";
 import { PlannedReminderDummyData } from "@/types/reminder";
 import { useState } from "react";
-import PageView from "@/custom-components/templates";
 import { Alert } from "react-native";
-import PlannedRoutineAccordion from "@/custom-components/plannedRoutineAccordion";
+import {
+  Box,
+  Button,
+  Heading,
+  ScrollView,
+  Text
+} from "./../../components";
 
 export default function TabOneScreen() {
   const [routines, setRoutines] = useState(PlannedReminderDummyData);
@@ -67,9 +49,9 @@ export default function TabOneScreen() {
       <Box pt="$5">
         <Heading size={"2xl"}>Remind Me</Heading>
       </Box>
-      <Box pt="$5">
+      <Box pt="$5" flex={1}>
         <Heading size={"lg"}>My Routines</Heading>
-        <ScrollView style={{ flexGrow: 1/* , backgroundColor: "red" */ }}>
+        <ScrollView style={{ flexGrow: 1}}>
           {routines?.map((routine, index) => {
             return (
               <PlannedRoutineAccordion
@@ -83,11 +65,16 @@ export default function TabOneScreen() {
           })}
         </ScrollView>
       </Box>
-      {/* Why does this not appear */}
-      <Box>
-        <Heading size={"lg"}>where button?!</Heading>
-        <Button>
-          <Text>test</Text>
+      <Box pt="$4">
+        <Button
+          action="primary"
+          variant="solid"
+          size="md"
+          onPress={() => {
+            console.log('Button new Routine Pressed');
+          }}
+        >
+          <Text bg="black">Create New Routine</Text>
         </Button>
       </Box>
     </PageView>
