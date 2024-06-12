@@ -1,26 +1,12 @@
-const dummyData: string[] = ["Aufgabe 1", "Aufgabe 2"];
-import { StyleSheet } from "react-native";
 import PlannedRoutineAccordion from "@/custom-components/plannedRoutineAccordion";
 import PageView from "@/custom-components/templates";
 import { PlannedReminderDummyData } from "@/types/reminder";
 import { useState } from "react";
 import { Alert } from "react-native";
 import {
-  Switch,
-  HStack,
-  Heading,
-  Accordion,
-  ChevronUpIcon,
-  ChevronDownIcon,
-  AccordionItem,
-  AccordionHeader,
-  AccordionContent,
-  AccordionContentText,
-  AccordionIcon,
-  AccordionTitleText,
-  AccordionTrigger,
   Box,
   Button,
+  Heading,
   ScrollView,
   Text
 } from "./../../components";
@@ -94,11 +80,3 @@ export default function TabOneScreen() {
     </PageView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
