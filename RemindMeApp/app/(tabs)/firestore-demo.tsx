@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { useState } from "react";
 import { Box, View, Text, Button, VStack, HStack, Card, Divider, Center, Spinner, ScrollView, Icon, CalendarDaysIcon} from "../../components";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
@@ -6,6 +7,9 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { initializeApp  } from 'firebase/app';
 import { DocumentData, getFirestore } from 'firebase/firestore';
+import { doc, addDoc, collection, getDocs, deleteDoc } from "firebase/firestore"; 
+import { get, set } from "@gluestack-style/react";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCnht2-k29OLuuADU_H5i5mEorwIOFNX5Y",
@@ -21,12 +25,19 @@ const db = getFirestore(firebaseApp);
 
 // ------ Firebase -------
 
-import { addDoc, collection, getDocs } from "firebase/firestore"; 
-import { useState } from "react";
+const exampleDocument = {
+  id : "1",
+  data: { 
+    first: "Alan", 
+    middle: "Mathison", 
+    last: "Turing", 
+    born: 1912 
+  } 
+}
 
 export default function TabOneScreen() {
-  const [documents, setDocuments] = useState<DocumentData[]>([ { first: "Alan", middle: "Mathison", last: "Turing", born: 1912 } ]); 
   const [loading, setLoading] = useState(false);
+  const [documents, setDocuments] = useState<DocumentData[]>([ exampleDocument ]); 
 
   const getAllDocs = async () => {
     setLoading(true);
@@ -34,7 +45,7 @@ export default function TabOneScreen() {
       const querySnapshot = await getDocs(collection(db, "users"));
       const entrys: DocumentData[] = [];
       querySnapshot.forEach((doc) => {
-        entrys.push(doc.data());
+        entrys.push({ id: doc.id, data: doc.data() });
       });
       setDocuments(entrys);
       setLoading(false);
@@ -58,8 +69,16 @@ export default function TabOneScreen() {
     }
   };
 
-  const deleteDoc = async () => {
-    
+  const deleteDocById = async (id: number) => {
+    setLoading(true);
+    let docRef = doc(db, "users", id.toString());
+    try {
+      await deleteDoc(docRef);
+      getAllDocs();
+    } catch (e) {
+      console.error("Error removing document: ", e);
+      setLoading(false);
+    }
   }
 
   return (
@@ -69,8 +88,8 @@ export default function TabOneScreen() {
           {documents.map((doc, index) => (
             <View key={index}>
               <HStack key={doc.id} space="xl" py="$2">
-                <Text>{doc.first} {doc.middle} {doc.last}</Text>
-                <FontAwesome size={20} color="black" name="remove" style={styles.icon}/>
+                <Text>{doc.data.first} {doc.data.middle} {doc.data.last}</Text>
+                <FontAwesome size={20} color="black" name="remove" style={styles.icon} onPress={() => deleteDocById(doc.id)}/>
               </HStack>
             </View>
           ))}
