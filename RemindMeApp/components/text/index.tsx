@@ -4,13 +4,20 @@ import { styled } from '@gluestack-style/react';
 const StyledText = styled(
   RNText,
   {
-    color: '$text700',
+    color: 'black',
     fontWeight: '$normal',
     fontFamily: '$body',
     fontStyle: 'normal',
-    letterSpacing: '$md',
 
     variants: {
+      bg: {
+        black: {
+          color: 'white', // Set text color to white when background is black
+        },
+        transparent: {
+          color: 'black', // Set text color to black when background is transparent
+        },
+      },
       isTruncated: {
         true: {
           props: {
