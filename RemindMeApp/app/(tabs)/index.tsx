@@ -21,7 +21,6 @@ import {
   AccordionTrigger,
   Box,
   Button,
-  Heading,
   ScrollView,
   Text
 } from "./../../components";
