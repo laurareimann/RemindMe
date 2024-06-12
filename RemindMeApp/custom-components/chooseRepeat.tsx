@@ -13,7 +13,6 @@ import {
     SelectPortal,
     SelectTrigger,
 } from "@/components";
-import { SelectIcon } from "@gluestack-ui/themed";
 import React from "react";
 import { View } from "react-native";
 export default function ChooseRepeat() {

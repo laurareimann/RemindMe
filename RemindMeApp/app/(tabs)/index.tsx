@@ -1,33 +1,15 @@
-import {
-  Box,
-  View,
-  Text,
-  Switch,
-  HStack,
-  Heading,
-  Accordion,
-  ChevronUpIcon,
-  ChevronDownIcon,
-  AccordionItem,
-  AccordionHeader,
-  AccordionContent,
-  AccordionContentText,
-  AccordionIcon,
-  AccordionTitleText,
-  AccordionTrigger,
-  Icon,
-  VStack,
-  SunIcon,
-  ClockIcon,
-  ScrollView,
-  Button,
-  TrashIcon,
-} from "./../../components";
+import PlannedRoutineAccordion from "@/custom-components/plannedRoutineAccordion";
+import PageView from "@/custom-components/templates";
 import { PlannedReminderDummyData } from "@/types/reminder";
 import { useState } from "react";
-import PageView from "@/custom-components/templates";
 import { Alert } from "react-native";
-import PlannedRoutineAccordion from "@/custom-components/plannedRoutineAccordion";
+import {
+  Box,
+  Button,
+  Heading,
+  ScrollView,
+  Text
+} from "./../../components";
 
 export default function TabOneScreen() {
   const [routines, setRoutines] = useState(PlannedReminderDummyData);
@@ -85,7 +67,6 @@ export default function TabOneScreen() {
       </Box>
       {/* Why does this not appear */}
       <Box>
-        <Heading size={"lg"}>where button?!</Heading>
         <Button>
           <Text>test</Text>
         </Button>
