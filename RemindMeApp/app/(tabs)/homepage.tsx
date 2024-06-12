@@ -69,7 +69,6 @@ export default function TabOneScreen() {
           onPress={() => {
             console.log('Button new Routine Pressed');
             // switch to api-demo tab
-            this.props.navigation.navigate('api-demo');
           }}
         >
           <Text bg="black">Create New Routine</Text>
