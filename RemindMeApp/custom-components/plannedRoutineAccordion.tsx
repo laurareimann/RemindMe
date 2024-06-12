@@ -23,7 +23,6 @@ import { RoutinePlanned } from "@/types/reminder";
 import React from "react";
 
 type PlannedRoutineAccordionProps = {
-  key: number | string;
   routine: RoutinePlanned;
   routineIndex: number;
   handleSwitchToggle: (index: number) => void;
@@ -33,7 +32,7 @@ type PlannedRoutineAccordionProps = {
 export default function PlannedRoutineAccordion(
   props: PlannedRoutineAccordionProps
 ) {
-  const { key, routineIndex, routine, handleSwitchToggle, handleDeleteRoutine } =
+  const { routineIndex, routine, handleSwitchToggle, handleDeleteRoutine } =
     props;
 
   const formatWeekdays = (days: { [key: string]: boolean }) => {
@@ -44,7 +43,7 @@ export default function PlannedRoutineAccordion(
   };
 
   return (
-    <View key={key}>
+    <View>
       <Accordion
         key={routineIndex}
         m="$2.5"

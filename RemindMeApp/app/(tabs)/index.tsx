@@ -9,7 +9,7 @@ import {
   Heading,
   ScrollView,
   Text
-} from "./../../components";
+} from "../../components";
 
 export default function TabOneScreen() {
   const [routines, setRoutines] = useState(PlannedReminderDummyData);
@@ -46,9 +46,6 @@ export default function TabOneScreen() {
   };
   return (
     <PageView>
-      <Box pt="$5">
-        <Heading size={"2xl"}>Remind Me</Heading>
-      </Box>
       <Box pt="$5" flex={1}>
         <Heading size={"lg"}>My Routines</Heading>
         <ScrollView style={{ flexGrow: 1}}>
