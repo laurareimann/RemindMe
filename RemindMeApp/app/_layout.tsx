@@ -55,12 +55,6 @@ function RootLayoutNav() {
               headerShown: false,
             }}
           />
-          <Stack.Screen
-            name="modal"
-            options={{
-              presentation: "modal",
-            }}
-          />
         </Stack>
       </ThemeProvider>
     </GluestackUIProvider>
