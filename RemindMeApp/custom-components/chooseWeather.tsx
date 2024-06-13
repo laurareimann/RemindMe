@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+import { View, StyleSheet } from "react-native";
 import {
   Box,
   Button,
@@ -16,29 +18,48 @@ import {
   LucideIcon,
   Sun,
 } from "lucide-react-native";
-import React from "react";
-import { View } from "react-native";
 
 type WeatherButtonProps = {
   icon: LucideIcon;
-  setValue?: () => void;
+  isActive: boolean;
+  onPress: () => void;
 };
 
-function WeatherButton(props: WeatherButtonProps) {
+function WeatherButton({ icon, isActive, onPress }: WeatherButtonProps) {
   return (
     <Button
-      // width={50} // Ensure the button is a square
-      // height={50} // Ensure the button is a square
-      // borderRadius={25} // Half of the width / height to make it a circle
       borderRadius="$full"
       size="sm"
+      style={[styles.button, isActive ? styles.buttonActive : styles.buttonInactive]}
+      onPress={onPress}
     >
-      <ButtonIcon color="black" as={props.icon} />
+      <ButtonIcon color={isActive ? "white" : "black"} as={icon} />
     </Button>
   );
 }
 
+type ActiveWeather = {
+  sun: boolean;
+  hail: boolean;
+  lightning: boolean;
+  snow: boolean;
+};
+
 export default function ChooseWeather() {
+  const [activeWeather, setActiveWeather] = useState<ActiveWeather>({
+    sun: false,
+    hail: false,
+    lightning: false,
+    snow: false,
+  });
+
+  const toggleWeather = (weather: keyof ActiveWeather) => {
+    setActiveWeather((prevActiveWeather) => ({
+      ...prevActiveWeather,
+      [weather]: !prevActiveWeather[weather],
+    }));
+  };
+
   return (
     <View>
       <Box flexDirection="row" justifyContent="space-between">
@@ -51,16 +72,51 @@ export default function ChooseWeather() {
           </InputSlot>
         </Input>
         <Button width="5%">
-          <ButtonIcon as={LocateFixed} color="black"/>
+          <ButtonIcon as={LocateFixed} color="black" />
         </Button>
       </Box>
 
       <ButtonGroup justifyContent="flex-start">
-        <WeatherButton icon={Sun} />
-        <WeatherButton icon={CloudHail} />
-        <WeatherButton icon={CloudLightning} />
-        <WeatherButton icon={CloudSnow} />
+        <WeatherButton
+          icon={Sun}
+          isActive={activeWeather.sun}
+          onPress={() => toggleWeather("sun")}
+        />
+        <WeatherButton
+          icon={CloudHail}
+          isActive={activeWeather.hail}
+          onPress={() => toggleWeather("hail")}
+        />
+        <WeatherButton
+          icon={CloudLightning}
+          isActive={activeWeather.lightning}
+          onPress={() => toggleWeather("lightning")}
+        />
+        <WeatherButton
+          icon={CloudSnow}
+          isActive={activeWeather.snow}
+          onPress={() => toggleWeather("snow")}
+        />
       </ButtonGroup>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    //borderRadius: "$full",
+    //size:"sm",
+    borderRadius: 50,
+    // todo: hight & width evtl. in % oder iwie anders?
+    width: 35,
+    height: 35,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonActive: {
+    backgroundColor: "black",
+  },
+  buttonInactive: {
+    backgroundColor: "white",
+  },
+});

@@ -14,7 +14,7 @@ import {
     SelectTrigger,
 } from "@/components";
 import React from "react";
-import { View } from "react-native";
+import { View, Text} from "react-native";
 export default function ChooseRepeat() {
   return (
     <View>
@@ -38,6 +38,7 @@ export default function ChooseRepeat() {
             </SelectContent>
           </SelectPortal>
         </Select>
+        <Text>ToDo: fix select view</Text>
       </Box>
     </View>
   );

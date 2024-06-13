@@ -17,6 +17,7 @@
     "@gluestack-style/react": "^1.0.56",
     "@gluestack-ui/config": "^1.1.18",
     "@gluestack-ui/themed": "^1.1.26",
+    "@react-native-community/datetimepicker": "^8.1.0",
     "@react-navigation/native": "^6.0.2",
     "expo": "~51.0.0",
     "expo-font": "~12.0.4",
