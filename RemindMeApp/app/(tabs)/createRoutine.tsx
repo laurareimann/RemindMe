@@ -18,20 +18,35 @@ import React, { useState } from "react";
 import { View } from "react-native";
 
 export default function createRoutine() {
-  const [routine, setRoutine] = useState<Routine>(); // in Routine sind noch dinge offe
+  //const [routine, setRoutine] = useState<Routine>(); // in Routine sind noch dinge offe
+  let routine = {}
   //=> Ziel: eigentlich nur ein useState 
   //...
   //aber erstmal mit für jede Komponente ein useState
+
+  // message:
+  // repeat: repeat & time & days
+  // weather: location & weather
+  // temperature: min/max & temp
   const [activeWeather, setActiveWeather] = useState<WeatherState>({
-    sun: false,
-    hail: false,
-    lightning: false,
-    snow: false,
+    location: "",
+    activeWeather:{
+      sun: false,
+      hail: false,
+      lightning: false,
+      snow: false,
+    }
   });
+
+  routine = {
+    activeWeather
+  }
+
   
 
   return (
     <ScrollView style={{ padding: 15, backgroundColor:'white' }}>
+      <Text>{JSON.stringify(routine, null, 2)}</Text>
       <Text>createRoutine.tsx</Text>
       <Heading>Create a Routine:</Heading>
       <Box>

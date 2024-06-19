@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   Button,
@@ -8,17 +9,9 @@ import {
   InputIcon,
   InputSlot,
 } from "@/components";
-import { WeatherState, CustomComponentProps } from "@/types/routine";
-import {
-  CloudHail,
-  CloudLightning,
-  CloudSnow,
-  LocateFixed,
-  LucideIcon,
-  Sun,
-} from "lucide-react-native";
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { LucideIcon, Sun, CloudHail, CloudLightning, CloudSnow, LocateFixed } from "lucide-react-native";
+import { StyleSheet, View, TextInputChangeEventData, NativeSyntheticEvent } from "react-native";
+import { CustomComponentProps, WeatherState } from "@/types/routine";
 
 type WeatherButtonProps = {
   icon: LucideIcon;
@@ -29,7 +22,7 @@ type WeatherButtonProps = {
 function WeatherButton({ icon, isActive, onPress }: WeatherButtonProps) {
   return (
     <Button
-      borderRadius="$full"
+      borderRadius={50}
       size="sm"
       style={[styles.button, isActive ? styles.buttonActive : styles.buttonInactive]}
       onPress={onPress}
@@ -39,24 +32,32 @@ function WeatherButton({ icon, isActive, onPress }: WeatherButtonProps) {
   );
 }
 
-
-
-export default function ChooseWeather({value, setValue}:CustomComponentProps<WeatherState>) {
+export default function ChooseWeather({ value, setValue }: CustomComponentProps<WeatherState>) {
   
-  const toggleWeather = (weather: keyof WeatherState) => {
+  const toggleWeather = (weather: keyof WeatherState['activeWeather']) => {
     // Erstelle eine Kopie des aktuellen Zustands
-    const updatedWeatherState = { ...value };
+    const updatedWeatherState = { ...value, activeWeather: { ...value.activeWeather } };
     // Toggle den Wert für das angegebene Wetterphänomen
-    updatedWeatherState[weather] = !updatedWeatherState[weather];
+    updatedWeatherState.activeWeather[weather] = !updatedWeatherState.activeWeather[weather];
     // Aktualisiere den Zustand über die setValue-Funktion
     setValue(updatedWeatherState);
+  };
+
+  const handleLocationChange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
+    const newLocation = event.nativeEvent.text;
+    // Aktualisiere den Zustand über die setValue-Funktion
+    setValue({ ...value, location: newLocation });
   };
 
   return (
     <View>
       <Box flexDirection="row" justifyContent="space-between">
         <Input width="85%">
-          <InputField placeholder="your location" />
+          <InputField
+            placeholder="your location"
+            value={value.location}
+            onChange={handleLocationChange}
+          />
           <InputSlot>
             <InputIcon>
               <LocateFixed />
@@ -71,22 +72,22 @@ export default function ChooseWeather({value, setValue}:CustomComponentProps<Wea
       <ButtonGroup justifyContent="flex-start">
         <WeatherButton
           icon={Sun}
-          isActive={value.sun}
+          isActive={value.activeWeather.sun}
           onPress={() => toggleWeather("sun")}
         />
         <WeatherButton
           icon={CloudHail}
-          isActive={value.hail}
+          isActive={value.activeWeather.hail}
           onPress={() => toggleWeather("hail")}
         />
         <WeatherButton
           icon={CloudLightning}
-          isActive={value.lightning}
+          isActive={value.activeWeather.lightning}
           onPress={() => toggleWeather("lightning")}
         />
         <WeatherButton
           icon={CloudSnow}
-          isActive={value.snow}
+          isActive={value.activeWeather.snow}
           onPress={() => toggleWeather("snow")}
         />
       </ButtonGroup>
@@ -96,12 +97,9 @@ export default function ChooseWeather({value, setValue}:CustomComponentProps<Wea
 
 const styles = StyleSheet.create({
   button: {
-    //borderRadius: "$full",
-    //size:"sm",
-    borderRadius: 50,
-    // todo: hight & width evtl. in % oder iwie anders?
     width: 35,
     height: 35,
+    borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
   },

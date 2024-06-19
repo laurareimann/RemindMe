@@ -41,12 +41,20 @@ export type TempState = {
 // todo:
 
 // chooseWeather.tsx
+
 export type WeatherState = {
+  location: string
+  activeWeather: ActiveWeather
+};
+
+export type ActiveWeather = {
   sun: boolean;
   hail: boolean;
   lightning: boolean;
   snow: boolean;
 };
+
+
 
 
 export type Routine = {
