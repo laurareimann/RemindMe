@@ -15,8 +15,7 @@ type ActiveButtons = {
 export default function ChooseTemperature() {
   const [temp, setTemp] = useState<number>(20);
   const [activeButtons, setActiveButtons] = useState<ActiveButtons>({
-    // todo: soll auch beides active sein ?
-    min: false,
+    min: true,
     max: false,
   });
 

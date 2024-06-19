@@ -1,23 +1,25 @@
 import {
   Box,
+  Button,
+  ButtonGroup,
+  Heading,
   Input,
   InputField,
   InputIcon,
   InputSlot,
   Text,
-  Heading,
 } from "@/components";
 import ChooseDays from "@/custom-components/chooseDays";
 import ChooseRepeat from "@/custom-components/chooseRepeat";
 import ChooseTemperature from "@/custom-components/chooseTemperature";
 import ChooseTime from "@/custom-components/chooseTime";
 import ChooseWeather from "@/custom-components/chooseWeather";
-import React from "react";
-import { View } from "react-native";
 import PageView from "@/custom-components/templates";
-
+import React, { useState } from "react";
+import { View, StyleSheet } from "react-native";
 
 export default function createRoutine() {
+
   return (
     <PageView>
       <View>
@@ -35,7 +37,7 @@ export default function createRoutine() {
         </View>
 
         <Heading paddingTop={"$4"} paddingBottom={"$2"}>Repeat</Heading>
-        <Box paddingBottom={"$2"} flexDirection="row" justifyContent="space-between">
+        <Box paddingBottom={"$2"} flexDirection="column" justifyContent="space-between">
           <Box width={"47%"}>
             {/*ChooseRepeat.tsx*/}
             <ChooseRepeat />
