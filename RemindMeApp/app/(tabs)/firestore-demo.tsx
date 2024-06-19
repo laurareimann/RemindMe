@@ -8,6 +8,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { initializeApp  } from 'firebase/app';
 import { DocumentData, getFirestore } from 'firebase/firestore';
 import { doc, addDoc, collection, getDocs, deleteDoc } from "firebase/firestore"; 
+import React from "react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCnht2-k29OLuuADU_H5i5mEorwIOFNX5Y",
