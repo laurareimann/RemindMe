@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
 import {
   Box,
   Button,
@@ -10,6 +8,7 @@ import {
   InputIcon,
   InputSlot,
 } from "@/components";
+import { WeatherState, CustomComponentProps } from "@/types/routine";
 import {
   CloudHail,
   CloudLightning,
@@ -18,7 +17,8 @@ import {
   LucideIcon,
   Sun,
 } from "lucide-react-native";
-import { ActiveWeather, CustomComponentProps } from "@/types/routine";
+import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
 
 type WeatherButtonProps = {
   icon: LucideIcon;
@@ -41,20 +41,15 @@ function WeatherButton({ icon, isActive, onPress }: WeatherButtonProps) {
 
 
 
-export default function ChooseWeather(props: CustomComponentProps<ActiveWeather>) {
-  const {value, onChange} = props
-  const [activeWeather, setActiveWeather] = useState<ActiveWeather>({
-    sun: false,
-    hail: false,
-    lightning: false,
-    snow: false,
-  });
-
-  const toggleWeather = (weather: keyof ActiveWeather) => {
-    setActiveWeather((prevActiveWeather) => ({
-      ...prevActiveWeather,
-      [weather]: !prevActiveWeather[weather],
-    }));
+export default function ChooseWeather({value, setValue}:CustomComponentProps<WeatherState>) {
+  
+  const toggleWeather = (weather: keyof WeatherState) => {
+    // Erstelle eine Kopie des aktuellen Zustands
+    const updatedWeatherState = { ...value };
+    // Toggle den Wert für das angegebene Wetterphänomen
+    updatedWeatherState[weather] = !updatedWeatherState[weather];
+    // Aktualisiere den Zustand über die setValue-Funktion
+    setValue(updatedWeatherState);
   };
 
   return (
@@ -76,22 +71,22 @@ export default function ChooseWeather(props: CustomComponentProps<ActiveWeather>
       <ButtonGroup justifyContent="flex-start">
         <WeatherButton
           icon={Sun}
-          isActive={activeWeather.sun}
+          isActive={value.sun}
           onPress={() => toggleWeather("sun")}
         />
         <WeatherButton
           icon={CloudHail}
-          isActive={activeWeather.hail}
+          isActive={value.hail}
           onPress={() => toggleWeather("hail")}
         />
         <WeatherButton
           icon={CloudLightning}
-          isActive={activeWeather.lightning}
+          isActive={value.lightning}
           onPress={() => toggleWeather("lightning")}
         />
         <WeatherButton
           icon={CloudSnow}
-          isActive={activeWeather.snow}
+          isActive={value.snow}
           onPress={() => toggleWeather("snow")}
         />
       </ButtonGroup>

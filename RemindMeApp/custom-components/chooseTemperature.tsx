@@ -4,24 +4,42 @@ import {
   ButtonGroup,
   Text
 } from "@/components";
-import { ActiveMinMaxTemp } from "@/types/routine";
+import { ActiveMinMaxTemp, TempState } from "@/types/routine";
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 
 
 
 export default function ChooseTemperature() {
-  const [temp, setTemp] = useState<number>(20);
-  const [activeButtons, setActiveButtons] = useState<ActiveMinMaxTemp>({
-    // todo: soll auch beides active sein ?
-    min: false,
-    max: false,
+  const [state, setState] = useState<TempState>({
+    temp: 20,
+    activeButtons: {
+      min: false,
+      max: false,
+    },
   });
 
   const toggleButton = (button: keyof ActiveMinMaxTemp) => {
-    setActiveButtons((prevActiveButtons) => ({
-      ...prevActiveButtons,
-      [button]: !prevActiveButtons[button],
+    setState((prevState) => ({
+      ...prevState,
+      activeButtons: {
+        ...prevState.activeButtons,
+        [button]: !prevState.activeButtons[button],
+      },
+    }));
+  };
+
+  const incrementTemp = () => {
+    setState((prevState) => ({
+      ...prevState,
+      temp: prevState.temp + 1,
+    }));
+  };
+
+  const decrementTemp = () => {
+    setState((prevState) => ({
+      ...prevState,
+      temp: prevState.temp - 1,
     }));
   };
 
@@ -33,19 +51,19 @@ export default function ChooseTemperature() {
             variant="outline"
             size="xs"
             borderColor="$backgroundLight300"
-            style={activeButtons.min ? styles.buttonActive : styles.buttonInactive}
+            style={state.activeButtons.min ? styles.buttonActive : styles.buttonInactive}
             onPress={() => toggleButton("min")}
           >
-            <Text style={activeButtons.min ? styles.textActive : styles.textInactive}>Min</Text>
+            <Text style={state.activeButtons.min ? styles.textActive : styles.textInactive}>Min</Text>
           </Button>
           <Button
             variant="outline"
             size="xs"
             borderColor="$backgroundLight300"
-            style={activeButtons.max ? styles.buttonActive : styles.buttonInactive}
+            style={state.activeButtons.max ? styles.buttonActive : styles.buttonInactive}
             onPress={() => toggleButton("max")}
           >
-            <Text style={activeButtons.max ? styles.textActive : styles.textInactive}>Max</Text>
+            <Text style={state.activeButtons.max ? styles.textActive : styles.textInactive}>Max</Text>
           </Button>
         </ButtonGroup>
 
@@ -56,7 +74,7 @@ export default function ChooseTemperature() {
             borderColor="$backgroundLight300"
             borderRightWidth="$0"
             $dark-borderColor="$backgroundDark700"
-            onPress={() => setTemp(temp + 1)}
+            onPress={incrementTemp}
           >
             <Text bold>+</Text>
           </Button>
@@ -69,7 +87,7 @@ export default function ChooseTemperature() {
             borderLeftWidth="$0"
             $dark-borderColor="$backgroundDark700"
           >
-            <Text>{temp}°C</Text>
+            <Text>{state.temp}°C</Text>
           </Button>
           <Button
             variant="outline"
@@ -77,7 +95,7 @@ export default function ChooseTemperature() {
             borderColor="$backgroundLight300"
             borderLeftWidth="$0"
             $dark-borderColor="$backgroundDark70"
-            onPress={() => setTemp(temp - 1)}
+            onPress={decrementTemp}
           >
             <Text bold>-</Text>
           </Button>

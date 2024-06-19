@@ -8,7 +8,7 @@ import {
 // ==> Components (useState value and function)
 export type CustomComponentProps<T> = {
   value: T;
-  onChange: (value: T) => void;
+  setValue: (value: T) => void;
 };
 
 // ==> Routine Parts
@@ -32,26 +32,32 @@ export type ActiveMinMaxTemp = {
   min: boolean;
   max: boolean;
 };
+export type TempState = {
+  temp: number;
+  activeButtons: ActiveMinMaxTemp;
+};
 
 // chooseTime.tsx
 // todo:
 
 // chooseWeather.tsx
-export type ActiveWeather = {
+export type WeatherState = {
   sun: boolean;
   hail: boolean;
   lightning: boolean;
   snow: boolean;
 };
 
+
 export type Routine = {
   message: string;
   repeat: ""; //todo
   time: ""; //todo
   days: ActiveDays;
-  weather: { location: string; activeWeather: ActiveWeather };
-  temperature: { temp: number; activeMinMaxTemp: ActiveMinMaxTemp };
+  weather: { location: string; activeWeather: WeatherState };
+  temperature: TempState
 };
+
 
 //! old types ... 
 
