@@ -9,10 +9,17 @@ import {
   Heading,
   ScrollView,
   Text
-} from "./../../components";
+} from "../../components";
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+
+type RootStackParamList = {
+  'index': undefined;
+  'api-demo': undefined;
+};
 
 export default function TabOneScreen() {
   const [routines, setRoutines] = useState(PlannedReminderDummyData);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleSwitchToggle = (index: number) => {
     // Use the map function to create a new array of routines with the updated isActive value
@@ -46,12 +53,9 @@ export default function TabOneScreen() {
   };
   return (
     <PageView>
-      <Box pt="$5">
-        <Heading size={"2xl"}>Remind Me</Heading>
-      </Box>
-      <Box pt="$5">
+      <Box pt="$5" flex={1}>
         <Heading size={"lg"}>My Routines</Heading>
-        <ScrollView style={{ flexGrow: 1/* , backgroundColor: "red" */ }}>
+        <ScrollView style={{ flexGrow: 1 }}>
           {routines?.map((routine, index) => {
             return (
               <PlannedRoutineAccordion
@@ -65,10 +69,17 @@ export default function TabOneScreen() {
           })}
         </ScrollView>
       </Box>
-      {/* Why does this not appear */}
-      <Box>
-        <Button>
-          <Text>test</Text>
+      <Box pt="$4">
+        <Button
+          action="primary"
+          variant="solid"
+          size="md"
+          onPress={() => {
+            console.log('Button new Routine Pressed');
+            navigation.navigate('api-demo');
+          }}
+        >
+          <Text bg="black">Create New Routine</Text>
         </Button>
       </Box>
     </PageView>

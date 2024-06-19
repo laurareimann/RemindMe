@@ -1,33 +1,28 @@
-import React from "react";
-import { RoutinePlanned } from "@/types/reminder";
 import {
-  Box,
-  View,
-  Text,
-  Switch,
-  HStack,
-  Heading,
   Accordion,
-  ChevronUpIcon,
-  ChevronDownIcon,
-  AccordionItem,
-  AccordionHeader,
   AccordionContent,
-  AccordionContentText,
+  AccordionHeader,
   AccordionIcon,
+  AccordionItem,
   AccordionTitleText,
   AccordionTrigger,
-  Icon,
-  VStack,
-  SunIcon,
-  ClockIcon,
-  ScrollView,
   Button,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  ClockIcon,
+  HStack,
+  Icon,
+  SunIcon,
+  Switch,
+  Text,
   TrashIcon,
+  VStack,
+  View
 } from "@/components";
+import { RoutinePlanned } from "@/types/reminder";
+import React from "react";
 
 type PlannedRoutineAccordionProps = {
-  key: number | string;
   routine: RoutinePlanned;
   routineIndex: number;
   handleSwitchToggle: (index: number) => void;
@@ -37,10 +32,18 @@ type PlannedRoutineAccordionProps = {
 export default function PlannedRoutineAccordion(
   props: PlannedRoutineAccordionProps
 ) {
-  const { key, routineIndex, routine, handleSwitchToggle, handleDeleteRoutine } =
+  const { routineIndex, routine, handleSwitchToggle, handleDeleteRoutine } =
     props;
+
+  const formatWeekdays = (days: { [key: string]: boolean }) => {
+    return Object.keys(days)
+      .filter((day) => days[day])
+      .map((day) => day.substring(0, 2)) // Take first two letters as abbreviation
+      .join(", ");
+  };
+
   return (
-    <View key={key}>
+    <View>
       <Accordion
         key={routineIndex}
         m="$2.5"
@@ -84,37 +87,53 @@ export default function PlannedRoutineAccordion(
             <VStack space="sm" p={3}>
               {/* Repeats Section */}
               {/* Todo: ReWork this here */}
-              <HStack alignItems="center" space="sm">
-                <Button onPress={() => handleDeleteRoutine(routineIndex)}>
-                  <Icon as={TrashIcon} color="red" />
-                </Button>
-                <Icon as={ClockIcon} size="sm" />
-                <Text>
-                  {Array.isArray(routine.Repeats.time)
-                    ? routine.Repeats.time.join(", ")
-                    : routine.Repeats.time}
-                </Text>
-              </HStack>
-              <Text>
-                {Object.keys(routine.Repeats.days)
-                  .filter((day) => routine.Repeats.days[day])
-                  .join(", ")}
-              </Text>
+              <HStack justifyContent="space-between" space="sm" flexDirection="column">
+                <HStack justifyContent="space-between">
+                  {/* Time and Weekdays */}
+                  <HStack justifyContent="space-between" alignItems="center" space="sm">
+                    <HStack alignItems="center" space="sm">
+                      <Icon as={ClockIcon} size="sm" color="black" />
+                      <HStack flexDirection="column">
+                        <Text>
+                          {Array.isArray(routine.Repeats.time)
+                            ? routine.Repeats.time.join(", ")
+                            : routine.Repeats.time}
+                        </Text>
+                        <Text>
+                          {formatWeekdays(routine.Repeats.days)}
+                        </Text>
+                      </HStack>
+                    </HStack>
+                  </HStack>
+                  {/* Trash Icon */}
+                  <HStack justifyContent="flex-end" alignItems="flex-start" space="sm">
+                    <Button variant="link" onPress={() => handleDeleteRoutine(routineIndex)}>
+                      <Icon as={TrashIcon} color="red" />
+                    </Button>
+                  </HStack>
+                </HStack>
 
-              {/* Weather Section */}
-              {/* Todo: ReWork this here */}
-              <HStack alignItems="center" space="sm">
-                <Icon as={SunIcon} size="sm" />
-                <Text>
-                  {Array.isArray(routine.weather.weatherConditions)
-                    ? routine.weather.weatherConditions.join(", ")
-                    : routine.weather.weatherConditions}
-                </Text>
+                {/* Weather Section */}
+                <HStack justifyContent="space-between">
+                  <HStack justifyContent="space-between" alignItems="center" space="sm">
+                    <HStack alignItems="center" space="sm">
+                      <Icon as={SunIcon} size="sm" color="black" />
+                      <HStack flexDirection="column">
+                        <Text>
+                          {Array.isArray(routine.weather.weatherConditions)
+                            ? routine.weather.weatherConditions.join(", ")
+                            : routine.weather.weatherConditions}
+                        </Text>
+                        {/* Temperature Section */}
+                        <Text>
+                          {routine.temperature.isMin ? "min" : "max"}{" "}
+                          {routine.temperature.celsius}°C
+                        </Text>
+                      </HStack>
+                    </HStack>
+                  </HStack>
+                </HStack>
               </HStack>
-              <Text>
-                {routine.temperature.isMin ? "min" : "max"}{" "}
-                {routine.temperature.celsius}°C
-              </Text>
             </VStack>
           </AccordionContent>
         </AccordionItem>

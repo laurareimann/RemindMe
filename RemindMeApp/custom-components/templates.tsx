@@ -1,16 +1,19 @@
-import { View, Text } from "react-native";
 import React, { ReactElement, ReactNode } from "react";
-import { StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import { Box } from "lucide-react-native";
 
 type childrenAsProps = {
   children: ReactNode;
+  style?: ViewStyle; // Optional style props
 };
 
 const styles = StyleSheet.create({
   pageView: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 16,
+    paddingBottom: 32,
   },
   text: {
     fontSize: 20,
@@ -19,6 +22,6 @@ const styles = StyleSheet.create({
 });
 
 // Box - Align to the top and Items are centered
-export default function PageView(props: childrenAsProps) {
-  return <View style={styles.pageView}>{props.children}</View>;
+export default function PageView({ children, style }: childrenAsProps) {
+  return <View style={StyleSheet.compose(styles.pageView, style)}>{children}</View>;
 }
