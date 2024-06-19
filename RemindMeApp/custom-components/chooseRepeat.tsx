@@ -9,6 +9,7 @@ import { View, StyleSheet } from "react-native";
 
 type ActiveButtons = {
   daily: boolean;
+  weekly: boolean;
   monthly: boolean;
   yearly: boolean;
 };
@@ -16,15 +17,18 @@ type ActiveButtons = {
 export default function ChooseRepeat() {
   const [activeButtons, setActiveButtons] = useState<ActiveButtons>({
     daily: true,
+    weekly: false,
     monthly: false,
     yearly: false,
   });
 
   const toggleButton = (button: keyof ActiveButtons) => {
-    setActiveButtons((prevActiveButtons) => ({
-      ...prevActiveButtons,
-      [button]: !prevActiveButtons[button],
-    }));
+    setActiveButtons({
+      daily: button === 'daily',
+      weekly: button === 'weekly',
+      monthly: button === 'monthly',
+      yearly: button === 'yearly',
+    });
   };
 
   return (
@@ -44,10 +48,20 @@ export default function ChooseRepeat() {
           variant="outline"
           size="xs"
           borderColor="black"
+          borderRightWidth="$1"
+          borderLeftWidth="$1"
+          style={activeButtons.weekly ? styles.buttonActive : styles.buttonInactive}
+          onPress={() => toggleButton("weekly")}>
+          <Text style={activeButtons.weekly ? styles.textActive : styles.textInactive}>Weekly</Text>
+        </Button>
+        <Button
+          variant="outline"
+          size="xs"
+          borderColor="black"
+          borderRightWidth="$1"
           borderLeftWidth="$1"
           style={activeButtons.monthly ? styles.buttonActive : styles.buttonInactive}
-          onPress={() => toggleButton("monthly")}
-        >
+          onPress={() => toggleButton("monthly")}>
           <Text style={activeButtons.monthly ? styles.textActive : styles.textInactive}>Monthly</Text>
         </Button>
         <Button
@@ -56,35 +70,10 @@ export default function ChooseRepeat() {
           borderColor="black"
           borderLeftWidth="$1"
           style={activeButtons.yearly ? styles.buttonActive : styles.buttonInactive}
-          onPress={() => toggleButton("yearly")}
-        >
+          onPress={() => toggleButton("yearly")}>
           <Text style={activeButtons.yearly ? styles.textActive : styles.textInactive}>Yearly</Text>
         </Button>
       </ButtonGroup>
-      {/* 
-
-
-
-      <Box overflow="visible">
-        <Select>
-          <SelectTrigger variant="outline" size="md">
-            <SelectInput placeholder="Select option" />
-            <Icon as={CalendarDaysIcon} size="md" />
-          </SelectTrigger>
-          <SelectPortal>            
-            <SelectBackdrop />
-            <SelectContent>
-              <SelectDragIndicatorWrapper>
-              </SelectDragIndicatorWrapper>
-              <SelectItem label="daily" value="daily" />
-              <SelectItem label="weekly" value="weekly" />
-              <SelectItem label="yearly" value="yearly" isDisabled={true} />
-            </SelectContent>
-          </SelectPortal>
-        </Select>
-        <Text>ToDo: fix select view</Text>
-      </Box>
-       */}
     </View>
   );
 }
@@ -103,4 +92,3 @@ const styles = StyleSheet.create({
     color: "black",
   },
 });
-

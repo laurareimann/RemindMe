@@ -36,7 +36,7 @@ type ActiveDays = {
 
 export default function ChooseDays() {
   const [activeDays, setActiveDays] = useState<ActiveDays>({
-    Mo: false,
+    Mo: true,
     Tu: false,
     We: false,
     Th: false,
