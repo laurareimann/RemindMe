@@ -6,6 +6,7 @@ import {
   InputSlot,
   Text,
   Heading,
+  ScrollView,
 } from "@/components";
 import ChooseDays from "@/custom-components/chooseDays";
 import ChooseRepeat from "@/custom-components/chooseRepeat";
@@ -17,7 +18,7 @@ import { View } from "react-native";
 
 export default function createRoutine() {
   return (
-    <View style={{ padding: 15, backgroundColor:'white' }}>
+    <ScrollView style={{ padding: 15, backgroundColor:'white' }}>
       <Text>createRoutine.tsx</Text>
       <Heading>Create a Routine:</Heading>
       <Box>
@@ -56,6 +57,6 @@ export default function createRoutine() {
         <Text>ChooseTemperature.tsx</Text>
         <ChooseTemperature />
       </Box>
-    </View>
+    </ScrollView>
   );
 }
