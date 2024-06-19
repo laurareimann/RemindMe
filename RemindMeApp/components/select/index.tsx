@@ -461,7 +461,7 @@ const StyledSelectRoot = styled(View, {});
 const StyledSelectTrigger = styled(
   Pressable,
   {
-    'borderWidth': 1,
+    'borderWidth': 2,
     'borderColor': '$background300',
     'borderRadius': '$sm',
     'flexDirection': 'row',

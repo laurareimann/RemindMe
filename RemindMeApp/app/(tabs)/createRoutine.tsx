@@ -14,48 +14,54 @@ import ChooseTime from "@/custom-components/chooseTime";
 import ChooseWeather from "@/custom-components/chooseWeather";
 import React from "react";
 import { View } from "react-native";
+import PageView from "@/custom-components/templates";
+
 
 export default function createRoutine() {
   return (
-    <View style={{ padding: 15, backgroundColor:'white' }}>
-      <Text>createRoutine.tsx</Text>
-      <Heading>Create a Routine:</Heading>
-      <Box>
-        <Input>
-          <InputField placeholder="your routine message" />
-          <InputSlot>
-            <InputIcon>{/* Some Icon Component */}</InputIcon>
-          </InputSlot>
-        </Input>
-      </Box>
+    <PageView>
+      <View>
+        <View>
+          {/*createRoutine.tsx*/}
+          <Heading paddingBottom={"$2"}>New Routine:</Heading>
+          <Box>
+            <Input>
+              <InputField placeholder="Your routine message" />
+              <InputSlot>
+                <InputIcon>{/* Some Icon Component */}</InputIcon>
+              </InputSlot>
+            </Input>
+          </Box>
+        </View>
 
-      <Heading>Repeat</Heading>
-      <Box flexDirection="row" justifyContent="space-between">
-        <Box width={"47%"}>
-          <Text>ChooseRepeat.tsx</Text>
-          <ChooseRepeat />
+        <Heading paddingTop={"$4"} paddingBottom={"$2"}>Repeat</Heading>
+        <Box paddingBottom={"$2"} flexDirection="row" justifyContent="space-between">
+          <Box width={"47%"}>
+            {/*ChooseRepeat.tsx*/}
+            <ChooseRepeat />
+          </Box>
+          <Box width={"47%"}>
+            {/*ChooseTime.tsx*/}
+            <ChooseTime />
+          </Box>
         </Box>
-        <Box width={"47%"}>
-          <Text>ChooseTime.tsx</Text>
-          <ChooseTime />
+        <Box>
+          {/*ChooseDays.tsx*/}
+          <ChooseDays />
         </Box>
-      </Box>
-      <Box>
-        <Text>ChooseDays.tsx</Text>
-        <ChooseDays />
-      </Box>
 
-      <Heading>Weather</Heading>
-      <Box>
-        <Text>ChooseWeather.tsx</Text>
-        <ChooseWeather/>
-      </Box>
+        <Heading paddingTop={"$4"} paddingBottom={"$2"}>Weather</Heading>
+        <Box>
+          {/*ChooseWeather.tsx*/}
+          <ChooseWeather />
+        </Box>
 
-      <Heading>Temperature</Heading>
-      <Box>
-        <Text>ChooseTemperature.tsx</Text>
-        <ChooseTemperature />
-      </Box>
-    </View>
+        <Heading paddingTop={"$4"} paddingBottom={"$2"}>Temperature</Heading>
+        <Box>
+          {/*ChooseTemperature.tsx*/}
+          <ChooseTemperature />
+        </Box>
+      </View>
+    </PageView>
   );
 }

@@ -26,7 +26,7 @@ export default function ChooseRepeat() {
             <Icon as={CalendarDaysIcon} size="md" />
             {/* </SelectIcon> */}
           </SelectTrigger>
-          <SelectPortal>
+          <SelectPortal style={{position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 100}}>
             <SelectBackdrop />
             <SelectContent>
               <SelectDragIndicatorWrapper>

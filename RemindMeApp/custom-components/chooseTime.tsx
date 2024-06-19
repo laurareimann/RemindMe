@@ -1,7 +1,11 @@
-import { SafeAreaView } from "@/components";
+import { Button, ButtonIcon, SafeAreaView } from "@/components";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import {
+  Clock3
+} from "lucide-react-native";
 import React, { useState } from "react";
-import { Button, Platform, Text } from "react-native";
+import { Platform, Text } from "react-native";
+
 
 // we only net Hours and Minutes
 var d = new Date(); // for now
@@ -24,6 +28,7 @@ export default function ChooseTime() {
     setShow(false);
   };
 
+  const formattedTime = `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
 
   return (
     <>
@@ -36,7 +41,9 @@ export default function ChooseTime() {
           is24Hour={true}
           onChange={onChange}
         /> */}
-        <Button onPress={showPicker} title="Select Time" />
+        <Button width="5%" onPress={showPicker}>
+          <ButtonIcon as={Clock3} color="white"/>
+        </Button>
         {show && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -47,8 +54,7 @@ export default function ChooseTime() {
         />
       )}
       </SafeAreaView>
-      <Text>selected: {date.toLocaleString()}</Text>
-      <Text>ToDo: only use Hours & Minutes</Text>
+      <Text>selected: {formattedTime}</Text>      
     </>
   );
 }
