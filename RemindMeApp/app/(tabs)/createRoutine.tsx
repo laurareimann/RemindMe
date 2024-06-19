@@ -13,10 +13,19 @@ import ChooseRepeat from "@/custom-components/chooseRepeat";
 import ChooseTemperature from "@/custom-components/chooseTemperature";
 import ChooseTime from "@/custom-components/chooseTime";
 import ChooseWeather from "@/custom-components/chooseWeather";
-import React from "react";
+import { ActiveWeather, Routine } from "@/types/routine";
+import React, { useState } from "react";
 import { View } from "react-native";
 
 export default function createRoutine() {
+  const [routine, setRoutine] = useState<Routine>(); // in Routine sind noch dinge offe
+  const handleChange = <T, >(key: keyof Routine, value: T) => {
+    //setRoutine(/*todo*/);
+    //entwerder setRoutine und wie hier: https://chatgpt.com/share/217dc4a5-b451-44b5-91a4-d59760900dce
+    // oder alle useStates aus den anderen Komponenten hier herbringen und einzelnt einbinden
+    // siehe wie hier unten bei ChooseWeather
+  };
+
   return (
     <ScrollView style={{ padding: 15, backgroundColor:'white' }}>
       <Text>createRoutine.tsx</Text>
@@ -49,7 +58,7 @@ export default function createRoutine() {
       <Heading>Weather</Heading>
       <Box>
         <Text>ChooseWeather.tsx</Text>
-        <ChooseWeather/>
+        <ChooseWeather value={routine?.weather} onChange={(e) => handleChange('weather', e.target.value)}/>
       </Box>
 
       <Heading>Temperature</Heading>

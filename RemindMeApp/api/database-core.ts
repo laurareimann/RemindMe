@@ -1,4 +1,4 @@
-import { RoutinePlanned } from '@/types/reminder';
+import { RoutinePlanned } from '@/types/routine';
 import { initializeApp } from 'firebase/app';
 import { DocumentData, getFirestore } from 'firebase/firestore';
 import { doc, addDoc, collection, getDocs, deleteDoc } from "firebase/firestore";

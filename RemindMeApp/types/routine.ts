@@ -1,4 +1,59 @@
-import { CalendarDaysIcon, DownloadIcon, LucideIcon, MessageCircleIcon } from "lucide-react-native";
+import {
+  CalendarDaysIcon,
+  DownloadIcon,
+  LucideIcon,
+  MessageCircleIcon,
+} from "lucide-react-native";
+
+// ==> Components (useState value and function)
+export type CustomComponentProps<T> = {
+  value: T;
+  onChange: (value: T) => void;
+};
+
+// ==> Routine Parts
+//chooseDays.tsx
+export type ActiveDays = {
+  M: boolean;
+  T: boolean;
+  W: boolean;
+  Th: boolean;
+  F: boolean;
+  S: boolean;
+  Su: boolean;
+};
+
+// chooseRepeat.tsx
+// todo:types etc
+
+// chooseTemperature.tsx
+// temperature: number <= todo
+export type ActiveMinMaxTemp = {
+  min: boolean;
+  max: boolean;
+};
+
+// chooseTime.tsx
+// todo:
+
+// chooseWeather.tsx
+export type ActiveWeather = {
+  sun: boolean;
+  hail: boolean;
+  lightning: boolean;
+  snow: boolean;
+};
+
+export type Routine = {
+  message: string;
+  repeat: ""; //todo
+  time: ""; //todo
+  days: ActiveDays;
+  weather: { location: string; activeWeather: ActiveWeather };
+  temperature: { temp: number; activeMinMaxTemp: ActiveMinMaxTemp };
+};
+
+//! old types ... 
 
 type week = {
   Monday: boolean;
@@ -15,11 +70,11 @@ type gpsCoords = {
   longitude: number;
 };
 export type RoutinePlanned = {
-  icon: LucideIcon; 
+  icon: LucideIcon;
   message: string;
   isActive: boolean;
   Repeats: {
-    time: string | string[]; 
+    time: string | string[];
     // Allows for one or more times per day
     // maybe more than one time to remind more than one time per day
     // maybe random time which is invisible to create random reminder

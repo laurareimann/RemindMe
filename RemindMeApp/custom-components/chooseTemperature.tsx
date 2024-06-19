@@ -4,23 +4,21 @@ import {
   ButtonGroup,
   Text
 } from "@/components";
+import { ActiveMinMaxTemp } from "@/types/routine";
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 
-type ActiveButtons = {
-  min: boolean;
-  max: boolean;
-};
+
 
 export default function ChooseTemperature() {
   const [temp, setTemp] = useState<number>(20);
-  const [activeButtons, setActiveButtons] = useState<ActiveButtons>({
+  const [activeButtons, setActiveButtons] = useState<ActiveMinMaxTemp>({
     // todo: soll auch beides active sein ?
     min: false,
     max: false,
   });
 
-  const toggleButton = (button: keyof ActiveButtons) => {
+  const toggleButton = (button: keyof ActiveMinMaxTemp) => {
     setActiveButtons((prevActiveButtons) => ({
       ...prevActiveButtons,
       [button]: !prevActiveButtons[button],

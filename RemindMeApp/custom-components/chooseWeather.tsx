@@ -18,6 +18,7 @@ import {
   LucideIcon,
   Sun,
 } from "lucide-react-native";
+import { ActiveWeather, CustomComponentProps } from "@/types/routine";
 
 type WeatherButtonProps = {
   icon: LucideIcon;
@@ -38,14 +39,10 @@ function WeatherButton({ icon, isActive, onPress }: WeatherButtonProps) {
   );
 }
 
-type ActiveWeather = {
-  sun: boolean;
-  hail: boolean;
-  lightning: boolean;
-  snow: boolean;
-};
 
-export default function ChooseWeather() {
+
+export default function ChooseWeather(props: CustomComponentProps<ActiveWeather>) {
+  const {value, onChange} = props
   const [activeWeather, setActiveWeather] = useState<ActiveWeather>({
     sun: false,
     hail: false,

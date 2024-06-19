@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Button, ButtonGroup } from "@/components";
+import { ActiveDays } from "@/types/routine";
 
 type DayButtonProps = {
   dayText: string;
@@ -24,15 +25,7 @@ function DayButton({ dayText, isActive, onPress }: DayButtonProps) {
   );
 }
 
-type ActiveDays = {
-  M: boolean;
-  T: boolean;
-  W: boolean;
-  Th: boolean;
-  F: boolean;
-  S: boolean;
-  Su: boolean;
-};
+
 
 export default function ChooseDays() {
   const [activeDays, setActiveDays] = useState<ActiveDays>({
