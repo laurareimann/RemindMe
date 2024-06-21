@@ -14,7 +14,12 @@ type ActiveButtons = {
   yearly: boolean;
 };
 
-export default function ChooseRepeat() {
+type ChooseRepeatProps = {
+  onFrequencyChange: (frequency: keyof ActiveButtons) => void;
+};
+
+
+export default function ChooseRepeat({ onFrequencyChange }: ChooseRepeatProps) {
   const [activeButtons, setActiveButtons] = useState<ActiveButtons>({
     daily: true,
     weekly: false,
@@ -29,52 +34,51 @@ export default function ChooseRepeat() {
       monthly: button === 'monthly',
       yearly: button === 'yearly',
     });
+    onFrequencyChange(button);
   };
 
   return (
-    <View>
-      <ButtonGroup paddingBottom={"$2"} isAttached marginRight={15}>
-        <Button
-          variant="outline"
-          size="xs"
-          borderColor="black"
-          borderRightWidth="$1"
-          style={activeButtons.daily ? styles.buttonActive : styles.buttonInactive}
-          onPress={() => toggleButton("daily")}
-        >
-          <Text style={activeButtons.daily ? styles.textActive : styles.textInactive}>Daily</Text>
-        </Button>
-        <Button
-          variant="outline"
-          size="xs"
-          borderColor="black"
-          borderRightWidth="$1"
-          borderLeftWidth="$1"
-          style={activeButtons.weekly ? styles.buttonActive : styles.buttonInactive}
-          onPress={() => toggleButton("weekly")}>
-          <Text style={activeButtons.weekly ? styles.textActive : styles.textInactive}>Weekly</Text>
-        </Button>
-        <Button
-          variant="outline"
-          size="xs"
-          borderColor="black"
-          borderRightWidth="$1"
-          borderLeftWidth="$1"
-          style={activeButtons.monthly ? styles.buttonActive : styles.buttonInactive}
-          onPress={() => toggleButton("monthly")}>
-          <Text style={activeButtons.monthly ? styles.textActive : styles.textInactive}>Monthly</Text>
-        </Button>
-        <Button
-          variant="outline"
-          size="xs"
-          borderColor="black"
-          borderLeftWidth="$1"
-          style={activeButtons.yearly ? styles.buttonActive : styles.buttonInactive}
-          onPress={() => toggleButton("yearly")}>
-          <Text style={activeButtons.yearly ? styles.textActive : styles.textInactive}>Yearly</Text>
-        </Button>
-      </ButtonGroup>
-    </View>
+    <ButtonGroup paddingBottom={"$2"} isAttached>
+      <Button
+        variant="outline"
+        size="xs"
+        borderColor="black"
+        borderRightWidth="$1"
+        style={activeButtons.daily ? styles.buttonActive : styles.buttonInactive}
+        onPress={() => toggleButton("daily")}
+      >
+        <Text style={activeButtons.daily ? styles.textActive : styles.textInactive}>Daily</Text>
+      </Button>
+      <Button
+        variant="outline"
+        size="xs"
+        borderColor="black"
+        borderRightWidth="$1"
+        borderLeftWidth="$1"
+        style={activeButtons.weekly ? styles.buttonActive : styles.buttonInactive}
+        onPress={() => toggleButton("weekly")}>
+        <Text style={activeButtons.weekly ? styles.textActive : styles.textInactive}>Weekly</Text>
+      </Button>
+      <Button
+        variant="outline"
+        size="xs"
+        borderColor="black"
+        borderRightWidth="$1"
+        borderLeftWidth="$1"
+        style={activeButtons.monthly ? styles.buttonActive : styles.buttonInactive}
+        onPress={() => toggleButton("monthly")}>
+        <Text style={activeButtons.monthly ? styles.textActive : styles.textInactive}>Monthly</Text>
+      </Button>
+      <Button
+        variant="outline"
+        size="xs"
+        borderColor="black"
+        borderLeftWidth="$1"
+        style={activeButtons.yearly ? styles.buttonActive : styles.buttonInactive}
+        onPress={() => toggleButton("yearly")}>
+        <Text style={activeButtons.yearly ? styles.textActive : styles.textInactive}>Yearly</Text>
+      </Button>
+    </ButtonGroup>
   );
 }
 
