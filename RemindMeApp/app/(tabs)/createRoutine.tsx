@@ -6,24 +6,25 @@ import {
   InputField,
   InputIcon,
   InputSlot,
-  Text,
-  Switch,
   ScrollView,
+  Switch,
+  Text,
 } from "@/components";
 import ChooseDays from "@/custom-components/chooseDays";
 import ChooseRepeat from "@/custom-components/chooseRepeat";
 import ChooseTemperature from "@/custom-components/chooseTemperature";
 import ChooseTime from "@/custom-components/chooseTime";
 import ChooseWeather from "@/custom-components/chooseWeather";
-import { WeatherState, Routine, TempState, ActiveDays, RepeatState } from "@/types/routine";
 import PageView from "@/custom-components/templates";
+import { RepeatState, TempState, WeatherState } from "@/types/routine";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { uploadRoutine } from "@/api/database-core";
 import React, { useState } from "react";
 import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
   View,
 } from "react-native";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 type RootStackParamList = {
   index: undefined;
@@ -31,20 +32,10 @@ type RootStackParamList = {
 };
 
 export default function createRoutine() {
-  // von Laura
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [showWeather, setShowWeather] = useState(true);
   const [showTemperature, setShowTemperature] = useState(true);
-  // von Jannik
-  //const [routine, setRoutine] = useState<Routine>(); // in Routine sind noch dinge offe
-  let routine = {};
-  //=> Ziel: eigentlich nur ein useState
-  //...
-  //aber erstmal für jede Komponente ein useState...
 
-  // todo: 0. init Values
-  // isActive = true
-  // id
 
   // 1.[x] message:
   const [message, setMessage] = useState<string>("");
@@ -54,8 +45,7 @@ export default function createRoutine() {
     const newMessage = event.nativeEvent.text;
     setMessage(newMessage);
   };
-  // 2.[ ] repeat: repeat & time & days
-   
+  // 2.[x] repeat: repeat & time & days
   const [repeat, setRepeat] = useState<RepeatState>({
     frequency: "daily",
     days: {
@@ -88,21 +78,11 @@ export default function createRoutine() {
     },
   });
 
-  routine = {
-    message,
-    activeWeather,
-    tempState,
-    repeat,
-  };
 
-  /* const handleFrequencyChange = (newFrequency: string) => {
-    setFrequency(newFrequency);
-  }; */
 
   return (
     <PageView>
       <ScrollView style={{ flexGrow: 1 }}>
-        <Text>{JSON.stringify(routine, null, 2)}</Text>
         <View>
           <View>
             {/* 1. Message */}
@@ -111,7 +91,7 @@ export default function createRoutine() {
             <Box>
               <Input>
                 <InputField
-                  placeholder="Your routine message"
+                  placeholder="Your routineObject message"
                   value={message}
                   onChange={handleMessageChange}
                 />
@@ -212,9 +192,16 @@ export default function createRoutine() {
           action="primary"
           variant="solid"
           size="md"
-          onPress={() => {
-            console.log("Button new Routine Pressed");
-            navigation.navigate("api-demo");
+          onPress={async () => {
+            const response: any = await uploadRoutine({
+              message: message,
+              repeat: repeat,
+              weather: activeWeather,
+              temperature: tempState,
+              setActive: true,
+            });
+            navigation.navigate("index");
+            console.log(response);
           }}
         >
           <Text bg="black">Save</Text>

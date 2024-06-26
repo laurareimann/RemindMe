@@ -29,11 +29,11 @@ export const getAllRoutines = async () => {
     }
 }
 
-export const createRoutine = async (routine: RoutinePlanned) => {
+export const uploadRoutine = async (routine: any) => {
     // setLoading(true);
     try {
-        await addDoc(collection(db, "routines"), routine);
-        return true;
+        const response = await addDoc(collection(db, "routines"), routine);
+        return response;
     } catch (e) {
         return false;
     }
