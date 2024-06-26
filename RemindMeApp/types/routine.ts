@@ -25,7 +25,11 @@ export type ActiveDays = {
 };
 
 // chooseRepeat.tsx
-// todo:types etc
+export type RepeatState = {
+  frequency: "daily" | "weekly" | "monthly" | "yearly";
+  time: string;
+  days: ActiveDays;
+};
 
 // chooseTemperature.tsx
 // temperature: number <= todo

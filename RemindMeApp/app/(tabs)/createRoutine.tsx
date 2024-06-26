@@ -15,7 +15,7 @@ import ChooseRepeat from "@/custom-components/chooseRepeat";
 import ChooseTemperature from "@/custom-components/chooseTemperature";
 import ChooseTime from "@/custom-components/chooseTime";
 import ChooseWeather from "@/custom-components/chooseWeather";
-import { WeatherState, Routine, TempState } from "@/types/routine";
+import { WeatherState, Routine, TempState, ActiveDays, RepeatState } from "@/types/routine";
 import PageView from "@/custom-components/templates";
 import React, { useState } from "react";
 import {
@@ -33,10 +33,8 @@ type RootStackParamList = {
 export default function createRoutine() {
   // von Laura
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [frequency, setFrequency] = useState("daily");
   const [showWeather, setShowWeather] = useState(true);
   const [showTemperature, setShowTemperature] = useState(true);
-
   // von Jannik
   //const [routine, setRoutine] = useState<Routine>(); // in Routine sind noch dinge offe
   let routine = {};
@@ -57,6 +55,20 @@ export default function createRoutine() {
     setMessage(newMessage);
   };
   // 2.[ ] repeat: repeat & time & days
+   
+  const [repeat, setRepeat] = useState<RepeatState>({
+    frequency: "daily",
+    time: "",
+    days: {
+      Mo: false,
+      Tu: false,
+      We: false,
+      Th: false,
+      Fr: false,
+      Sa: false,
+      Su: false,
+    },
+  });
   // 3.[x] weather: location & weather
   const [activeWeather, setActiveWeather] = useState<WeatherState>({
     location: "",
@@ -79,12 +91,13 @@ export default function createRoutine() {
   routine = {
     message,
     activeWeather,
-    tempState
+    tempState,
+    repeat,
   };
 
-  const handleFrequencyChange = (newFrequency: string) => {
+  /* const handleFrequencyChange = (newFrequency: string) => {
     setFrequency(newFrequency);
-  };
+  }; */
 
   return (
     <PageView>
@@ -114,23 +127,23 @@ export default function createRoutine() {
           </Heading>
           <Box width={"47%"}>
             {/*ChooseRepeat.tsx*/}
-            <ChooseRepeat onFrequencyChange={handleFrequencyChange} />
+            <ChooseRepeat value={repeat} setValue={setRepeat} />
           </Box>
           <Box
             paddingBottom={"$2"}
             flexDirection="column"
             justifyContent="space-between"
           >
-            {frequency === "daily" && (
+            {repeat.frequency === "daily" && (
               <Box>
                 <ChooseTime showDateButton={false} showTimeButton={true} />
               </Box>
             )}
 
-            {frequency === "weekly" && (
+            {repeat.frequency === "weekly" && (
               <Box>
                 <Box paddingBottom={"$2"}>
-                  <ChooseDays />
+                  <ChooseDays value={repeat} setValue={setRepeat} />
                 </Box>
                 <Box>
                   <ChooseTime showDateButton={false} showTimeButton={true} />
@@ -138,7 +151,7 @@ export default function createRoutine() {
               </Box>
             )}
 
-            {frequency === "monthly" && (
+            {repeat.frequency === "monthly" && (
               <Box paddingBottom={"$2"}>
                 <Box>
                   <ChooseTime showDateButton={true} showTimeButton={true} />
@@ -146,7 +159,7 @@ export default function createRoutine() {
               </Box>
             )}
 
-            {frequency === "yearly" && (
+            {repeat.frequency === "yearly" && (
               <Box>
                 <ChooseTime showDateButton={true} showTimeButton={true} />
               </Box>

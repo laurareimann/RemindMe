@@ -3,38 +3,22 @@ import {
   ButtonGroup,
   Text
 } from "@/components";
+import { CustomComponentProps, RepeatState } from "@/types/routine";
 
-import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import React from "react";
+import { StyleSheet } from "react-native";
 
-type ActiveButtons = {
-  daily: boolean;
-  weekly: boolean;
-  monthly: boolean;
-  yearly: boolean;
-};
+export default function ChooseRepeat({
+  value,
+  setValue,
+}: CustomComponentProps<RepeatState>) {
 
-type ChooseRepeatProps = {
-  onFrequencyChange: (frequency: keyof ActiveButtons) => void;
-};
-
-
-export default function ChooseRepeat({ onFrequencyChange }: ChooseRepeatProps) {
-  const [activeButtons, setActiveButtons] = useState<ActiveButtons>({
-    daily: true,
-    weekly: false,
-    monthly: false,
-    yearly: false,
-  });
-
-  const toggleButton = (button: keyof ActiveButtons) => {
-    setActiveButtons({
-      daily: button === 'daily',
-      weekly: button === 'weekly',
-      monthly: button === 'monthly',
-      yearly: button === 'yearly',
+  const toggleButton = (button: "daily" | "weekly" | "monthly" | "yearly" ) => {
+    const prev = value;
+    setValue({
+      ...prev,
+      frequency: button,
     });
-    onFrequencyChange(button);
   };
 
   return (
@@ -44,10 +28,10 @@ export default function ChooseRepeat({ onFrequencyChange }: ChooseRepeatProps) {
         size="xs"
         borderColor="black"
         borderRightWidth="$1"
-        style={activeButtons.daily ? styles.buttonActive : styles.buttonInactive}
+        style={value.frequency === 'daily' ? styles.buttonActive : styles.buttonInactive}
         onPress={() => toggleButton("daily")}
       >
-        <Text style={activeButtons.daily ? styles.textActive : styles.textInactive}>Daily</Text>
+        <Text style={value.frequency === 'daily' ? styles.textActive : styles.textInactive}>Daily</Text>
       </Button>
       <Button
         variant="outline"
@@ -55,9 +39,9 @@ export default function ChooseRepeat({ onFrequencyChange }: ChooseRepeatProps) {
         borderColor="black"
         borderRightWidth="$1"
         borderLeftWidth="$1"
-        style={activeButtons.weekly ? styles.buttonActive : styles.buttonInactive}
+        style={value.frequency === 'weekly'  ? styles.buttonActive : styles.buttonInactive}
         onPress={() => toggleButton("weekly")}>
-        <Text style={activeButtons.weekly ? styles.textActive : styles.textInactive}>Weekly</Text>
+        <Text style={value.frequency === 'weekly' ? styles.textActive : styles.textInactive}>Weekly</Text>
       </Button>
       <Button
         variant="outline"
@@ -65,18 +49,18 @@ export default function ChooseRepeat({ onFrequencyChange }: ChooseRepeatProps) {
         borderColor="black"
         borderRightWidth="$1"
         borderLeftWidth="$1"
-        style={activeButtons.monthly ? styles.buttonActive : styles.buttonInactive}
+        style={value.frequency === 'monthly'  ? styles.buttonActive : styles.buttonInactive}
         onPress={() => toggleButton("monthly")}>
-        <Text style={activeButtons.monthly ? styles.textActive : styles.textInactive}>Monthly</Text>
+        <Text style={value.frequency === 'monthly' ? styles.textActive : styles.textInactive}>Monthly</Text>
       </Button>
       <Button
         variant="outline"
         size="xs"
         borderColor="black"
         borderLeftWidth="$1"
-        style={activeButtons.yearly ? styles.buttonActive : styles.buttonInactive}
+        style={value.frequency === 'yearly'  ? styles.buttonActive : styles.buttonInactive}
         onPress={() => toggleButton("yearly")}>
-        <Text style={activeButtons.yearly ? styles.textActive : styles.textInactive}>Yearly</Text>
+        <Text style={value.frequency === 'yearly' ? styles.textActive : styles.textInactive}>Yearly</Text>
       </Button>
     </ButtonGroup>
   );

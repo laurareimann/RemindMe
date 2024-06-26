@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Button, ButtonGroup } from "@/components";
-import { ActiveDays } from "@/types/routine";
+import { ActiveDays, CustomComponentProps, RepeatState } from "@/types/routine";
 
 type DayButtonProps = {
   dayText: string;
@@ -25,34 +25,32 @@ function DayButton({ dayText, isActive, onPress }: DayButtonProps) {
   );
 }
 
-
-
-export default function ChooseDays() {
-  const [activeDays, setActiveDays] = useState<ActiveDays>({
-    Mo: true,
-    Tu: false,
-    We: false,
-    Th: false,
-    Fr: false,
-    Sa: false,
-    Su: false,
-  });
-
+export default function ChooseDays(
+  {
+    value,
+    setValue,
+  }: CustomComponentProps<RepeatState>
+) {
+  
   const toggleDay = (day: keyof ActiveDays) => {
-    setActiveDays((prevActiveDays) => ({
-      ...prevActiveDays,
-      [day]: !prevActiveDays[day],
-    }));
+    const prev = value;
+    setValue({
+      ...prev,
+      days: {
+        ...prev.days,
+        [day]: !prev.days[day],
+      },
+    });
   };
 
   return (
     <View>
       <ButtonGroup justifyContent="space-between">
-        {Object.keys(activeDays).map((day) => (
+        {Object.keys(value.days).map((day) => (
           <DayButton
             key={day}
             dayText={day}
-            isActive={activeDays[day as keyof ActiveDays]}
+            isActive={value.days[day as keyof ActiveDays]}
             onPress={() => toggleDay(day as keyof ActiveDays)}
           />
         ))}
@@ -76,9 +74,9 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   buttonInactive: {
-      backgroundColor: "white",
-      borderColor: "black", 
-      borderWidth: 2,
+    backgroundColor: "white",
+    borderColor: "black",
+    borderWidth: 2,
   },
   textActive: {
     color: "white",
