@@ -50,7 +50,8 @@ export default function ChooseTemperature() {
           <Button
             variant="outline"
             size="xs"
-            borderColor="$backgroundLight300"
+            borderColor="black"
+            borderRightWidth="$1"
             style={state.activeButtons.min ? styles.buttonActive : styles.buttonInactive}
             onPress={() => toggleButton("min")}
           >
@@ -59,7 +60,8 @@ export default function ChooseTemperature() {
           <Button
             variant="outline"
             size="xs"
-            borderColor="$backgroundLight300"
+            borderColor="black"
+            borderLeftWidth="$1"
             style={state.activeButtons.max ? styles.buttonActive : styles.buttonInactive}
             onPress={() => toggleButton("max")}
           >
@@ -71,18 +73,18 @@ export default function ChooseTemperature() {
           <Button
             variant="outline"
             size="xs"
-            borderColor="$backgroundLight300"
+            borderColor="black"
             borderRightWidth="$0"
             $dark-borderColor="$backgroundDark700"
             onPress={incrementTemp}
           >
-            <Text bold>+</Text>
+            <Text bold>-</Text>
           </Button>
           <Button
             paddingHorizontal={-5}
             variant="outline"
             size="xs"
-            borderColor="$backgroundLight300"
+            borderColor="$black"
             borderRightWidth="$0"
             borderLeftWidth="$0"
             $dark-borderColor="$backgroundDark700"
@@ -92,13 +94,14 @@ export default function ChooseTemperature() {
           <Button
             variant="outline"
             size="xs"
-            borderColor="$backgroundLight300"
+            borderColor="$black"
             borderLeftWidth="$0"
-            $dark-borderColor="$backgroundDark70"
+            $dark-borderColor="$backgroundDark700"
             onPress={decrementTemp}
           >
-            <Text bold>-</Text>
+            <Text bold>+</Text>
           </Button>
+
         </ButtonGroup>
       </Box>
     </View>

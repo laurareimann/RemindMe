@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Button, ButtonGroup } from "@/components";
-import { ActiveDays } from "@/types/routine";
 
 type DayButtonProps = {
   dayText: string;
@@ -25,16 +24,24 @@ function DayButton({ dayText, isActive, onPress }: DayButtonProps) {
   );
 }
 
-
+type ActiveDays = {
+  Mo: boolean;
+  Tu: boolean;
+  We: boolean;
+  Th: boolean;
+  Fr: boolean;
+  Sa: boolean;
+  Su: boolean;
+};
 
 export default function ChooseDays() {
   const [activeDays, setActiveDays] = useState<ActiveDays>({
-    M: false,
-    T: false,
-    W: false,
+    Mo: true,
+    Tu: false,
+    We: false,
     Th: false,
-    F: false,
-    S: false,
+    Fr: false,
+    Sa: false,
     Su: false,
   });
 
@@ -76,7 +83,9 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   buttonInactive: {
-    backgroundColor: "white",
+      backgroundColor: "white",
+      borderColor: "black", 
+      borderWidth: 2,
   },
   textActive: {
     color: "white",

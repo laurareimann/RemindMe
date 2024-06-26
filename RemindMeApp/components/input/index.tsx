@@ -5,7 +5,7 @@ import { View, Pressable, TextInput } from 'react-native';
 const StyledRoot = styled(
   View,
   {
-    'borderWidth': 1,
+    'borderWidth': 2,
     'borderColor': '$background300',
     'borderRadius': '$sm',
     'flexDirection': 'row',
