@@ -58,7 +58,6 @@ export default function createRoutine() {
    
   const [repeat, setRepeat] = useState<RepeatState>({
     frequency: "daily",
-    time: "",
     days: {
       Mo: false,
       Tu: false,
@@ -67,7 +66,8 @@ export default function createRoutine() {
       Fr: false,
       Sa: false,
       Su: false,
-    },
+    }, 
+    dateMY: new Date(),
   });
   // 3.[x] weather: location & weather
   const [activeWeather, setActiveWeather] = useState<WeatherState>({
@@ -136,17 +136,17 @@ export default function createRoutine() {
           >
             {repeat.frequency === "daily" && (
               <Box>
-                <ChooseTime showDateButton={false} showTimeButton={true} />
+                <ChooseTime showDateButton={false} showTimeButton={true} value={repeat} setValue={setRepeat} />
               </Box>
             )}
 
             {repeat.frequency === "weekly" && (
               <Box>
                 <Box paddingBottom={"$2"}>
-                  <ChooseDays value={repeat} setValue={setRepeat} />
+                  <ChooseDays value={repeat} setValue={setRepeat} value={repeat} setValue={setRepeat}/>
                 </Box>
                 <Box>
-                  <ChooseTime showDateButton={false} showTimeButton={true} />
+                  <ChooseTime showDateButton={false} showTimeButton={true} value={repeat} setValue={setRepeat}/>
                 </Box>
               </Box>
             )}
@@ -154,14 +154,14 @@ export default function createRoutine() {
             {repeat.frequency === "monthly" && (
               <Box paddingBottom={"$2"}>
                 <Box>
-                  <ChooseTime showDateButton={true} showTimeButton={true} />
+                  <ChooseTime showDateButton={true} showTimeButton={true} value={repeat} setValue={setRepeat}/>
                 </Box>
               </Box>
             )}
 
             {repeat.frequency === "yearly" && (
               <Box>
-                <ChooseTime showDateButton={true} showTimeButton={true} />
+                <ChooseTime showDateButton={true} showTimeButton={true} value={repeat} setValue={setRepeat}/>
               </Box>
             )}
           </Box>

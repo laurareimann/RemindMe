@@ -27,7 +27,7 @@ export type ActiveDays = {
 // chooseRepeat.tsx
 export type RepeatState = {
   frequency: "daily" | "weekly" | "monthly" | "yearly";
-  time: string;
+  dateMY: Date;
   days: ActiveDays;
 };
 
