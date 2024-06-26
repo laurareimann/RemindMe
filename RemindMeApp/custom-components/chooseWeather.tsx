@@ -91,7 +91,8 @@ export default function ChooseWeather({
     let location = await Location.getCurrentPositionAsync({});
     setLocation(location);
     setStatusMsg('Success!');
-
+    // Setze die abgerufene Location in den value Zustand
+    setValue({ ...value, location: `${location.coords.latitude}, ${location.coords.longitude}` });
     console.log(location);
   };
 
@@ -110,7 +111,7 @@ export default function ChooseWeather({
           />
           
         </Input>
-        <Button width="5%" onPress={getLocation}>
+        <Button width="5%" onPress={getLocation} >
           <ButtonIcon as={LocateFixed} color="white" />
         </Button>
       </Box>
