@@ -13,13 +13,14 @@ export type CustomComponentProps<T> = {
 
 // ==> Routine Parts
 //chooseDays.tsx
+// todo: austauschen!
 export type ActiveDays = {
-  M: boolean;
-  T: boolean;
-  W: boolean;
+  Mo: boolean;
+  Tu: boolean;
+  We: boolean;
   Th: boolean;
-  F: boolean;
-  S: boolean;
+  Fr: boolean;
+  Sa: boolean;
   Su: boolean;
 };
 

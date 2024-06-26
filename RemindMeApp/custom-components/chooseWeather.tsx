@@ -9,8 +9,20 @@ import {
   InputIcon,
   InputSlot,
 } from "@/components";
-import { LucideIcon, Sun, CloudHail, CloudLightning, CloudSnow, LocateFixed } from "lucide-react-native";
-import { StyleSheet, View, TextInputChangeEventData, NativeSyntheticEvent } from "react-native";
+import {
+  LucideIcon,
+  Sun,
+  CloudHail,
+  CloudLightning,
+  CloudSnow,
+  LocateFixed,
+} from "lucide-react-native";
+import {
+  StyleSheet,
+  View,
+  TextInputChangeEventData,
+  NativeSyntheticEvent,
+} from "react-native";
 import { CustomComponentProps, WeatherState } from "@/types/routine";
 
 type WeatherButtonProps = {
@@ -24,7 +36,10 @@ function WeatherButton({ icon, isActive, onPress }: WeatherButtonProps) {
     <Button
       borderRadius={50}
       size="sm"
-      style={[styles.button, isActive ? styles.buttonActive : styles.buttonInactive]}
+      style={[
+        styles.button,
+        isActive ? styles.buttonActive : styles.buttonInactive,
+      ]}
       onPress={onPress}
     >
       <ButtonIcon color={isActive ? "white" : "black"} as={icon} />
@@ -32,18 +47,26 @@ function WeatherButton({ icon, isActive, onPress }: WeatherButtonProps) {
   );
 }
 
-export default function ChooseWeather({ value, setValue }: CustomComponentProps<WeatherState>) {
-  
-  const toggleWeather = (weather: keyof WeatherState['activeWeather']) => {
+export default function ChooseWeather({
+  value,
+  setValue,
+}: CustomComponentProps<WeatherState>) {
+  const toggleWeather = (weather: keyof WeatherState["activeWeather"]) => {
     // Erstelle eine Kopie des aktuellen Zustands
-    const updatedWeatherState = { ...value, activeWeather: { ...value.activeWeather } };
+    const updatedWeatherState = {
+      ...value,
+      activeWeather: { ...value.activeWeather },
+    };
     // Toggle den Wert für das angegebene Wetterphänomen
-    updatedWeatherState.activeWeather[weather] = !updatedWeatherState.activeWeather[weather];
+    updatedWeatherState.activeWeather[weather] =
+      !updatedWeatherState.activeWeather[weather];
     // Aktualisiere den Zustand über die setValue-Funktion
     setValue(updatedWeatherState);
   };
 
-  const handleLocationChange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
+  const handleLocationChange = (
+    event: NativeSyntheticEvent<TextInputChangeEventData>
+  ) => {
     const newLocation = event.nativeEvent.text;
     // Aktualisiere den Zustand über die setValue-Funktion
     setValue({ ...value, location: newLocation });
@@ -51,15 +74,18 @@ export default function ChooseWeather({ value, setValue }: CustomComponentProps<
 
   return (
     <View>
-      <Box paddingBottom={"$2"} flexDirection="row" justifyContent="space-between">
+      <Box
+        paddingBottom={"$2"}
+        flexDirection="row"
+        justifyContent="space-between"
+      >
         <Input width="85%">
-          <InputField placeholder="Your location" value={value.location}
-            onChange={handleLocationChange}/>
-          <InputSlot>
-            <InputIcon>
-              <LocateFixed />
-            </InputIcon>
-          </InputSlot>
+          <InputField
+            placeholder="Your location"
+            value={value.location}
+            onChange={handleLocationChange}
+          />
+          
         </Input>
         <Button width="5%">
           <ButtonIcon as={LocateFixed} color="white" />

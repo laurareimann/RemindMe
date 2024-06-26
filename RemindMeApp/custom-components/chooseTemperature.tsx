@@ -4,27 +4,31 @@ import {
   ButtonGroup,
   Text
 } from "@/components";
-import { ActiveMinMaxTemp, TempState } from "@/types/routine";
+import { ActiveMinMaxTemp, CustomComponentProps, TempState } from "@/types/routine";
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 
 
 
-export default function ChooseTemperature() {
+export default function ChooseTemperature({
+  value,
+  setValue,
+}: CustomComponentProps<TempState>) {
   const [state, setState] = useState<TempState>({
     temp: 20,
     activeButtons: {
-      min: false,
+      min: true,
       max: false,
     },
   });
 
-  const toggleButton = (button: keyof ActiveMinMaxTemp) => {
+
+  const toggleMinMaxButton = (button: keyof ActiveMinMaxTemp) => {
     setState((prevState) => ({
       ...prevState,
       activeButtons: {
-        ...prevState.activeButtons,
-        [button]: !prevState.activeButtons[button],
+        min: button === "min",
+        max: button === "max",
       },
     }));
   };
@@ -53,7 +57,7 @@ export default function ChooseTemperature() {
             borderColor="black"
             borderRightWidth="$1"
             style={state.activeButtons.min ? styles.buttonActive : styles.buttonInactive}
-            onPress={() => toggleButton("min")}
+            onPress={() => toggleMinMaxButton("min")}
           >
             <Text style={state.activeButtons.min ? styles.textActive : styles.textInactive}>Min</Text>
           </Button>
@@ -63,7 +67,7 @@ export default function ChooseTemperature() {
             borderColor="black"
             borderLeftWidth="$1"
             style={state.activeButtons.max ? styles.buttonActive : styles.buttonInactive}
-            onPress={() => toggleButton("max")}
+            onPress={() => toggleMinMaxButton("max")}
           >
             <Text style={state.activeButtons.max ? styles.textActive : styles.textInactive}>Max</Text>
           </Button>
@@ -76,7 +80,7 @@ export default function ChooseTemperature() {
             borderColor="black"
             borderRightWidth="$0"
             $dark-borderColor="$backgroundDark700"
-            onPress={incrementTemp}
+            onPress={decrementTemp}
           >
             <Text bold>-</Text>
           </Button>
@@ -97,7 +101,7 @@ export default function ChooseTemperature() {
             borderColor="$black"
             borderLeftWidth="$0"
             $dark-borderColor="$backgroundDark700"
-            onPress={decrementTemp}
+            onPress={incrementTemp}
           >
             <Text bold>+</Text>
           </Button>
