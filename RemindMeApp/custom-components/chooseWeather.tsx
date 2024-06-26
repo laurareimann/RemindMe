@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -8,6 +8,7 @@ import {
   InputField,
   InputIcon,
   InputSlot,
+  Text,
 } from "@/components";
 import {
   LucideIcon,
@@ -24,6 +25,8 @@ import {
   NativeSyntheticEvent,
 } from "react-native";
 import { CustomComponentProps, WeatherState } from "@/types/routine";
+import * as Location from 'expo-location';
+import { set } from "@gluestack-style/react";
 
 type WeatherButtonProps = {
   icon: LucideIcon;
@@ -51,6 +54,10 @@ export default function ChooseWeather({
   value,
   setValue,
 }: CustomComponentProps<WeatherState>) {
+
+  const [location, setLocation] = useState<Location.LocationObject | null>(null);
+  const [statusMsg, setStatusMsg] = useState('Your Location');
+
   const toggleWeather = (weather: keyof WeatherState["activeWeather"]) => {
     // Erstelle eine Kopie des aktuellen Zustands
     const updatedWeatherState = {
@@ -72,6 +79,22 @@ export default function ChooseWeather({
     setValue({ ...value, location: newLocation });
   };
 
+  const getLocation = async () => {
+    setStatusMsg('Getting location...');
+
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setStatusMsg('Permission error!');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+    setStatusMsg('Success!');
+
+    console.log(location);
+  };
+
   return (
     <View>
       <Box
@@ -81,13 +104,13 @@ export default function ChooseWeather({
       >
         <Input width="85%">
           <InputField
-            placeholder="Your location"
-            value={value.location}
+            placeholder={statusMsg}
+            value={location? '' + location?.coords.latitude + ', ' + location?.coords.longitude : statusMsg}
             onChange={handleLocationChange}
           />
           
         </Input>
-        <Button width="5%">
+        <Button width="5%" onPress={getLocation}>
           <ButtonIcon as={LocateFixed} color="white" />
         </Button>
       </Box>
