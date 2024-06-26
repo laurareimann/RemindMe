@@ -17,18 +17,18 @@ const ChooseTime: React.FC<ChooseTimeProps> = ({ showDateButton = true, showTime
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const onChange = (event: any, selectedDate: Date) => {
-    const currentDate = selectedDate || value.dateMY ;
+    const currentDate = selectedDate || value.date ;
     setShowTimePicker(Platform.OS === 'ios');
     setShowDatePicker(Platform.OS === 'ios');
     const prev = value;
     setValue({
       ...prev,
-      dateMY: currentDate,
+      date: currentDate,
     });
   };
 
-  const formattedDate = `${value.dateMY.getDate().toString().padStart(2, '0')}.${(value.dateMY.getMonth() + 1).toString().padStart(2, '0')}.${value.dateMY.getFullYear()}`;
-  const formattedTime = `${value.dateMY.getHours().toString().padStart(2, '0')}:${value.dateMY.getMinutes().toString().padStart(2, '0')}`;
+  const formattedDate = `${value.date.getDate().toString().padStart(2, '0')}.${(value.date.getMonth() + 1).toString().padStart(2, '0')}.${value.date.getFullYear()}`;
+  const formattedTime = `${value.date.getHours().toString().padStart(2, '0')}:${value.date.getMinutes().toString().padStart(2, '0')}`;
   
   let formattedDateTime = '';
   if (showDateButton) formattedDateTime += formattedDate;
@@ -51,7 +51,7 @@ const ChooseTime: React.FC<ChooseTimeProps> = ({ showDateButton = true, showTime
         {showDatePicker && (
           <DateTimePicker
             testID="datePicker"
-            value={value.dateMY}
+            value={value.date}
             mode="date"
             is24Hour={true}
             display="default"
@@ -64,7 +64,7 @@ const ChooseTime: React.FC<ChooseTimeProps> = ({ showDateButton = true, showTime
         {showTimePicker && (
           <DateTimePicker
             testID="timePicker"
-            value={value.dateMY}
+            value={value.date}
             mode="time"
             is24Hour={true}
             display="default"

@@ -27,7 +27,7 @@ export type ActiveDays = {
 // chooseRepeat.tsx
 export type RepeatState = {
   frequency: "daily" | "weekly" | "monthly" | "yearly";
-  dateMY: Date;
+  date: Date;
   days: ActiveDays;
 };
 
@@ -42,11 +42,8 @@ export type TempState = {
   activeButtons: ActiveMinMaxTemp;
 };
 
-// chooseTime.tsx
-// todo:
 
 // chooseWeather.tsx
-
 export type WeatherState = {
   location: string
   activeWeather: ActiveWeather
@@ -63,11 +60,11 @@ export type ActiveWeather = {
 
 
 export type Routine = {
+  isActive: boolean
   message: string;
-  repeat: ""; //todo
-  time: ""; //todo
-  days: ActiveDays;
-  weather: { location: string; activeWeather: WeatherState };
+  //---
+  repeat: RepeatState
+  weather: WeatherState
   temperature: TempState
 };
 

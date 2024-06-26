@@ -57,7 +57,7 @@ export default function createRoutine() {
       Sa: false,
       Su: false,
     }, 
-    dateMY: new Date(),
+    date: new Date(),
   });
   // 3.[x] weather: location & weather
   const [activeWeather, setActiveWeather] = useState<WeatherState>({
