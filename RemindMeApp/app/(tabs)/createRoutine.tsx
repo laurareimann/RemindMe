@@ -79,6 +79,7 @@ export default function createRoutine() {
   routine = {
     message,
     activeWeather,
+    tempState
   };
 
   const handleFrequencyChange = (newFrequency: string) => {
