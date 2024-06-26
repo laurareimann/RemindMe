@@ -9,6 +9,7 @@ import {
   InputField,
   InputIcon,
   InputSlot,
+  Text,
 } from "@/components";
 import {
   CloudHail,
@@ -18,6 +19,8 @@ import {
   LucideIcon,
   Sun,
 } from "lucide-react-native";
+import * as Location from 'expo-location';
+import { set } from "@gluestack-style/react";
 
 type WeatherButtonProps = {
   icon: LucideIcon;
@@ -53,6 +56,9 @@ export default function ChooseWeather() {
     snow: false,
   });
 
+  const [location, setLocation] = useState<Location.LocationObject | null>(null);
+  const [statusMsg, setStatusMsg] = useState('Your Location');
+
   const toggleWeather = (weather: keyof ActiveWeather) => {
     setActiveWeather((prevActiveWeather) => ({
       ...prevActiveWeather,
@@ -60,18 +66,34 @@ export default function ChooseWeather() {
     }));
   };
 
+  const getLocation = async () => {
+    setStatusMsg('Getting location...');
+
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setStatusMsg('Permission error!');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+    setStatusMsg('Success!');
+
+    console.log(location);
+  };
+
   return (
     <View>
       <Box paddingBottom={"$2"} flexDirection="row" justifyContent="space-between">
         <Input width="85%">
-          <InputField placeholder="Your location" />
+          <InputField placeholder={statusMsg} value={location? '' + location?.coords.latitude + ', ' + location?.coords.longitude : null} />
           <InputSlot>
             <InputIcon>
               <LocateFixed />
             </InputIcon>
           </InputSlot>
         </Input>
-        <Button width="5%">
+        <Button width="5%" onPress={getLocation}>
           <ButtonIcon as={LocateFixed} color="white" />
         </Button>
       </Box>
