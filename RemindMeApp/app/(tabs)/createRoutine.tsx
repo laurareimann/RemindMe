@@ -67,11 +67,11 @@ export default function createRoutine() {
       snow: false,
     },
   });
-  // 4.[ ] temperature: min/max & temp
+  // 4.[x] temperature: min/max & temp
   const [tempState, setTempState] = useState<TempState>({
     temp: 16,
     activeButtons: {
-      min: false,
+      min: true,
       max: false,
     },
   });

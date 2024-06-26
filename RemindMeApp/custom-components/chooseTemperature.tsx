@@ -15,14 +15,13 @@ export default function ChooseTemperature({
   setValue,
 }: CustomComponentProps<TempState>) {
   
-
   const toggleMinMaxButton = (button: keyof ActiveMinMaxTemp) => {
     const prev = value;
     setValue({
       ...prev,
       activeButtons: {
-        ...prev.activeButtons,
-        [button]: !prev.activeButtons[button],
+        min: !prev.activeButtons.min,
+        max: !prev.activeButtons.max,
       },
     })
   };
