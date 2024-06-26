@@ -28,6 +28,10 @@ export default function createRoutine() {
   //...
   //aber erstmal für jede Komponente ein useState...
 
+  // todo: 0. init Values
+  // isActive = true
+  // id
+
   // 1.[x] message:
   const [message, setMessage] = useState<string>("");
   const handleMessageChange = (
