@@ -25,23 +25,23 @@ function DayButton({ dayText, isActive, onPress }: DayButtonProps) {
 }
 
 type ActiveDays = {
-  M: boolean;
-  T: boolean;
-  W: boolean;
+  Mo: boolean;
+  Tu: boolean;
+  We: boolean;
   Th: boolean;
-  F: boolean;
-  S: boolean;
+  Fr: boolean;
+  Sa: boolean;
   Su: boolean;
 };
 
 export default function ChooseDays() {
   const [activeDays, setActiveDays] = useState<ActiveDays>({
-    M: false,
-    T: false,
-    W: false,
+    Mo: true,
+    Tu: false,
+    We: false,
     Th: false,
-    F: false,
-    S: false,
+    Fr: false,
+    Sa: false,
     Su: false,
   });
 
@@ -83,7 +83,9 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   buttonInactive: {
-    backgroundColor: "white",
+      backgroundColor: "white",
+      borderColor: "black", 
+      borderWidth: 2,
   },
   textActive: {
     color: "white",

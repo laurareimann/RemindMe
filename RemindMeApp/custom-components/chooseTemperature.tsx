@@ -15,8 +15,7 @@ type ActiveButtons = {
 export default function ChooseTemperature() {
   const [temp, setTemp] = useState<number>(20);
   const [activeButtons, setActiveButtons] = useState<ActiveButtons>({
-    // todo: soll auch beides active sein ?
-    min: false,
+    min: true,
     max: false,
   });
 
@@ -34,7 +33,8 @@ export default function ChooseTemperature() {
           <Button
             variant="outline"
             size="xs"
-            borderColor="$backgroundLight300"
+            borderColor="black"
+            borderRightWidth="$1"
             style={activeButtons.min ? styles.buttonActive : styles.buttonInactive}
             onPress={() => toggleButton("min")}
           >
@@ -43,7 +43,8 @@ export default function ChooseTemperature() {
           <Button
             variant="outline"
             size="xs"
-            borderColor="$backgroundLight300"
+            borderColor="black"
+            borderLeftWidth="$1"
             style={activeButtons.max ? styles.buttonActive : styles.buttonInactive}
             onPress={() => toggleButton("max")}
           >
@@ -55,18 +56,18 @@ export default function ChooseTemperature() {
           <Button
             variant="outline"
             size="xs"
-            borderColor="$backgroundLight300"
+            borderColor="black"
             borderRightWidth="$0"
-            $dark-borderColor="$backgroundDark700"
-            onPress={() => setTemp(temp + 1)}
+            $dark-borderColor="$backgroundDark70"
+            onPress={() => setTemp(temp - 1)}
           >
-            <Text bold>+</Text>
+            <Text bold>-</Text>
           </Button>
           <Button
             paddingHorizontal={-5}
             variant="outline"
             size="xs"
-            borderColor="$backgroundLight300"
+            borderColor="$black"
             borderRightWidth="$0"
             borderLeftWidth="$0"
             $dark-borderColor="$backgroundDark700"
@@ -76,13 +77,14 @@ export default function ChooseTemperature() {
           <Button
             variant="outline"
             size="xs"
-            borderColor="$backgroundLight300"
+            borderColor="$black"
             borderLeftWidth="$0"
-            $dark-borderColor="$backgroundDark70"
-            onPress={() => setTemp(temp - 1)}
+            $dark-borderColor="$backgroundDark700"
+            onPress={() => setTemp(temp + 1)}
           >
-            <Text bold>-</Text>
+            <Text bold>+</Text>
           </Button>
+
         </ButtonGroup>
       </Box>
     </View>

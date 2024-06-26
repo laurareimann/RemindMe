@@ -62,9 +62,9 @@ export default function ChooseWeather() {
 
   return (
     <View>
-      <Box flexDirection="row" justifyContent="space-between">
+      <Box paddingBottom={"$2"} flexDirection="row" justifyContent="space-between">
         <Input width="85%">
-          <InputField placeholder="your location" />
+          <InputField placeholder="Your location" />
           <InputSlot>
             <InputIcon>
               <LocateFixed />
@@ -72,7 +72,7 @@ export default function ChooseWeather() {
           </InputSlot>
         </Input>
         <Button width="5%">
-          <ButtonIcon as={LocateFixed} color="black" />
+          <ButtonIcon as={LocateFixed} color="white" />
         </Button>
       </Box>
 
@@ -118,5 +118,7 @@ const styles = StyleSheet.create({
   },
   buttonInactive: {
     backgroundColor: "white",
+    borderColor: "black",
+    borderWidth: 2,
   },
 });
