@@ -57,8 +57,6 @@ export type ActiveWeather = {
 };
 
 
-
-
 export type Routine = {
   isActive: boolean
   message: string;
@@ -67,6 +65,11 @@ export type Routine = {
   weather: WeatherState
   temperature: TempState
 };
+
+export type RoutineDbCall ={
+  id: number
+  routineData: Routine
+}
 
 
 //! old types ... 

@@ -123,7 +123,7 @@ export default function createRoutine() {
             {repeat.frequency === "weekly" && (
               <Box>
                 <Box paddingBottom={"$2"}>
-                  <ChooseDays value={repeat} setValue={setRepeat} value={repeat} setValue={setRepeat}/>
+                  <ChooseDays value={repeat} setValue={setRepeat} />
                 </Box>
                 <Box>
                   <ChooseTime showDateButton={false} showTimeButton={true} value={repeat} setValue={setRepeat}/>
