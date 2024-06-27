@@ -1,6 +1,6 @@
 import PlannedRoutineAccordion from "@/custom-components/plannedRoutineAccordion";
 import PageView from "@/custom-components/templates";
-import { PlannedReminderDummyData } from "@/types/reminder";
+import { PlannedReminderDummyData } from "@/types/routine";
 import { useState } from "react";
 import { Alert } from "react-native";
 import {

@@ -19,7 +19,7 @@ import {
   VStack,
   View
 } from "@/components";
-import { RoutinePlanned } from "@/types/reminder";
+import { RoutinePlanned } from "@/types/routine";
 import React from "react";
 
 type PlannedRoutineAccordionProps = {
