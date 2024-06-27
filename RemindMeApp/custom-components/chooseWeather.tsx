@@ -7,8 +7,7 @@ import {
   Input,
   InputField,
   InputIcon,
-  InputSlot,
-  Text,
+  InputSlot
 } from "@/components";
 import {
   LucideIcon,
@@ -26,7 +25,6 @@ import {
 } from "react-native";
 import { CustomComponentProps, WeatherState } from "@/types/routine";
 import * as Location from 'expo-location';
-import { set } from "@gluestack-style/react";
 
 type WeatherButtonProps = {
   icon: LucideIcon;
@@ -106,10 +104,12 @@ export default function ChooseWeather({
         <Input width="85%">
           <InputField
             placeholder={statusMsg}
-            value={location? '' + location?.coords.latitude + ', ' + location?.coords.longitude : statusMsg}
-            onChange={handleLocationChange}
-          />
-          
+            value={location ? `${location.coords.latitude}, ${location.coords.longitude}` : ''} />
+          <InputSlot>
+            <InputIcon>
+              <LocateFixed />
+            </InputIcon>
+          </InputSlot>
         </Input>
         <Button width="5%" onPress={getLocation} >
           <ButtonIcon as={LocateFixed} color="white" />
