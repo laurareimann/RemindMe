@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -8,17 +9,22 @@ import {
   InputIcon,
   InputSlot
 } from "@/components";
-import * as Location from 'expo-location';
 import {
+  LucideIcon,
+  Sun,
   CloudHail,
   CloudLightning,
   CloudSnow,
   LocateFixed,
-  LucideIcon,
-  Sun,
 } from "lucide-react-native";
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInputChangeEventData,
+  NativeSyntheticEvent,
+} from "react-native";
+import { CustomComponentProps, WeatherState } from "@/types/routine";
+import * as Location from 'expo-location';
 
 type WeatherButtonProps = {
   icon: LucideIcon;
@@ -29,9 +35,12 @@ type WeatherButtonProps = {
 function WeatherButton({ icon, isActive, onPress }: WeatherButtonProps) {
   return (
     <Button
-      borderRadius="$full"
+      borderRadius={50}
       size="sm"
-      style={[styles.button, isActive ? styles.buttonActive : styles.buttonInactive]}
+      style={[
+        styles.button,
+        isActive ? styles.buttonActive : styles.buttonInactive,
+      ]}
       onPress={onPress}
     >
       <ButtonIcon color={isActive ? "white" : "black"} as={icon} />
@@ -39,29 +48,33 @@ function WeatherButton({ icon, isActive, onPress }: WeatherButtonProps) {
   );
 }
 
-type ActiveWeather = {
-  sun: boolean;
-  hail: boolean;
-  lightning: boolean;
-  snow: boolean;
-};
-
-export default function ChooseWeather() {
-  const [activeWeather, setActiveWeather] = useState<ActiveWeather>({
-    sun: false,
-    hail: false,
-    lightning: false,
-    snow: false,
-  });
+export default function ChooseWeather({
+  value,
+  setValue,
+}: CustomComponentProps<WeatherState>) {
 
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [statusMsg, setStatusMsg] = useState('Your Location');
 
-  const toggleWeather = (weather: keyof ActiveWeather) => {
-    setActiveWeather((prevActiveWeather) => ({
-      ...prevActiveWeather,
-      [weather]: !prevActiveWeather[weather],
-    }));
+  const toggleWeather = (weather: keyof WeatherState["activeWeather"]) => {
+    // Erstelle eine Kopie des aktuellen Zustands
+    const updatedWeatherState = {
+      ...value,
+      activeWeather: { ...value.activeWeather },
+    };
+    // Toggle den Wert für das angegebene Wetterphänomen
+    updatedWeatherState.activeWeather[weather] =
+      !updatedWeatherState.activeWeather[weather];
+    // Aktualisiere den Zustand über die setValue-Funktion
+    setValue(updatedWeatherState);
+  };
+
+  const handleLocationChange = (
+    event: NativeSyntheticEvent<TextInputChangeEventData>
+  ) => {
+    const newLocation = event.nativeEvent.text;
+    // Aktualisiere den Zustand über die setValue-Funktion
+    setValue({ ...value, location: newLocation });
   };
 
   const getLocation = async () => {
@@ -76,24 +89,29 @@ export default function ChooseWeather() {
     let location = await Location.getCurrentPositionAsync({});
     setLocation(location);
     setStatusMsg('Success!');
-
+    // Setze die abgerufene Location in den value Zustand
+    setValue({ ...value, location: `${location.coords.latitude}, ${location.coords.longitude}` });
     console.log(location);
   };
 
   return (
     <View>
-      <Box paddingBottom={"$2"} flexDirection="row" justifyContent="space-between">
+      <Box
+        paddingBottom={"$2"}
+        flexDirection="row"
+        justifyContent="space-between"
+      >
         <Input width="85%">
-          <InputField 
-          placeholder={statusMsg} 
-          value={location ? `${location.coords.latitude}, ${location.coords.longitude}` : ''} />
+          <InputField
+            placeholder={statusMsg}
+            value={location ? `${location.coords.latitude}, ${location.coords.longitude}` : ''} />
           <InputSlot>
             <InputIcon>
               <LocateFixed />
             </InputIcon>
           </InputSlot>
         </Input>
-        <Button width="5%" onPress={getLocation}>
+        <Button width="5%" onPress={getLocation} >
           <ButtonIcon as={LocateFixed} color="white" />
         </Button>
       </Box>
@@ -101,22 +119,22 @@ export default function ChooseWeather() {
       <ButtonGroup justifyContent="flex-start">
         <WeatherButton
           icon={Sun}
-          isActive={activeWeather.sun}
+          isActive={value.activeWeather.sun}
           onPress={() => toggleWeather("sun")}
         />
         <WeatherButton
           icon={CloudHail}
-          isActive={activeWeather.hail}
+          isActive={value.activeWeather.hail}
           onPress={() => toggleWeather("hail")}
         />
         <WeatherButton
           icon={CloudLightning}
-          isActive={activeWeather.lightning}
+          isActive={value.activeWeather.lightning}
           onPress={() => toggleWeather("lightning")}
         />
         <WeatherButton
           icon={CloudSnow}
-          isActive={activeWeather.snow}
+          isActive={value.activeWeather.snow}
           onPress={() => toggleWeather("snow")}
         />
       </ButtonGroup>
@@ -126,12 +144,9 @@ export default function ChooseWeather() {
 
 const styles = StyleSheet.create({
   button: {
-    //borderRadius: "$full",
-    //size:"sm",
-    borderRadius: 50,
-    // todo: hight & width evtl. in % oder iwie anders?
     width: 35,
     height: 35,
+    borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
   },
