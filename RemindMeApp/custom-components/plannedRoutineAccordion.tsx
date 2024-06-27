@@ -24,6 +24,7 @@ import { RoutineDbCall } from "@/types/routine";
 import React from "react";
 import ChooseTime from "./chooseTime";
 import ChooseDays from "./chooseDays";
+import ShowRepeat from "./showRepeat";
 
 type PlannedRoutineAccordionProps = {
   routine: RoutineDbCall;
@@ -37,23 +38,7 @@ export default function PlannedRoutineAccordion(
   const { routine, handleSwitchToggle, handleDeleteRoutine } =
     props;
 
-  const hours = routine.routineData.repeat.date
-    .getHours()
-    .toString()
-    .padStart(2, "0");
-  const minutes = routine.routineData.repeat.date
-    .getMinutes()
-    .toString()
-    .padStart(2, "0");
-  const tag = String(routine.routineData.repeat.date.getDate()).padStart(
-    2,
-    "0"
-  );
-  const monat = String(routine.routineData.repeat.date.getMonth() + 1).padStart(
-    2,
-    "0"
-  ); // Monate sind nullbasiert
-  const jahr = routine.routineData.repeat.date.getFullYear();
+
 
   const formatWeekdays = (days: { [key: string]: boolean }) => {
     return Object.keys(days)
@@ -122,78 +107,7 @@ export default function PlannedRoutineAccordion(
                     space="sm"
                   >
                     <HStack alignItems="center" space="sm">
-                      <Text>{routine.routineData.repeat.frequency}</Text>
-                      <Icon as={ClockIcon} size="sm" color="black" />
-                      <Box
-                        paddingBottom={"$2"}
-                        flexDirection="column"
-                        justifyContent="space-between"
-                      >
-                        {routine.routineData.repeat.frequency === "daily" && (
-                          <Box>
-                            <ChooseTime
-                              showDateButton={false}
-                              showTimeButton={false}
-                              value={routine.routineData.repeat}
-                              setValue={() => {}}
-                            />
-                          </Box>
-                        )}
-
-                        {routine.routineData.repeat.frequency === "weekly" && (
-                          <Box>
-                            <Box paddingBottom={"$2"}>
-                              <ChooseDays
-                                value={routine.routineData.repeat}
-                                setValue={()=>{}}
-                              />
-                            </Box>
-                            <Box>
-                              <ChooseTime
-                                showDateButton={false}
-                                showTimeButton={false}
-                                value={routine.routineData.repeat}
-                                setValue={() => {}}
-                              />
-                            </Box>
-                          </Box>
-                        )}
-
-                        {routine.routineData.repeat.frequency === "monthly" && (
-                          <Box paddingBottom={"$2"}>
-                            <Box>
-                              <ChooseTime
-                                showDateButton={true}
-                                showTimeButton={true}
-                                value={routine.routineData.repeat}
-                                setValue={() => {}}
-                              />
-                            </Box>
-                          </Box>
-                        )}
-
-                        {routine.routineData.repeat.frequency === "yearly" && (
-                          <Box>
-                            <ChooseTime
-                              showDateButton={true}
-                              showTimeButton={true}
-                              value={routine.routineData.repeat}
-                              setValue={() => {}}
-                            />
-                          </Box>
-                        )}
-                      </Box>
-                      <HStack flexDirection="column">
-                        <Text>
-                          {/* ToDO fix join! => ", "*/}
-                          {hours + ":" + minutes}
-                        </Text>
-                        <Text>
-                          {
-                            /* formatWeekdays */ routine.routineData.repeat.date.getDay()
-                          }
-                        </Text>
-                      </HStack>
+                      <ShowRepeat repeatValues={routine.routineData.repeat}/>
                     </HStack>
                   </HStack>
                   {/* Trash Icon */}
