@@ -1,7 +1,7 @@
 import PlannedRoutineAccordion from "@/custom-components/plannedRoutineAccordion";
 import PageView from "@/custom-components/templates";
-import { PlannedReminderDummyData } from "@/types/routine";
-import { useState } from "react";
+import { PlannedReminderDummyData, Routine } from "@/types/routine";
+import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import {
   Box,
@@ -11,6 +11,8 @@ import {
   Text
 } from "../../components";
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { getAllRoutines } from "@/api/database-core";
+import { get } from "@gluestack-style/react";
 
 type RootStackParamList = {
   'index': undefined;
@@ -20,6 +22,15 @@ type RootStackParamList = {
 export default function TabOneScreen() {
   const [routines, setRoutines] = useState(PlannedReminderDummyData);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const [newRoutines, setNewRoutines] = useState<any>(null);
+
+  useEffect(() => {
+    getAllRoutines().then((routines) => {
+      setNewRoutines(routines);
+      console.log('routines', routines);
+    });
+  }, [])
 
   const handleSwitchToggle = (index: number) => {
     // Use the map function to create a new array of routines with the updated isActive value
@@ -69,7 +80,7 @@ export default function TabOneScreen() {
           })}
         </ScrollView>
       </Box>
-      <Box pt="$4">
+      <Box pt="$4" gap="$2" flexDirection="row">
         <Button
           action="primary"
           variant="solid"
@@ -80,6 +91,20 @@ export default function TabOneScreen() {
           }}
         >
           <Text bg="black">Create New Routine</Text>
+        </Button>
+        <Button
+          action="primary"
+          variant="solid"
+          size="md"
+          onPress={() => {
+            getAllRoutines().then((routines) => {
+              setNewRoutines(routines);
+              console.log('routines', routines);
+            });
+          }
+        }
+        >
+          <Text bg="black">Refresh</Text>
         </Button>
       </Box>
     </PageView>
