@@ -91,7 +91,7 @@ export default function createRoutine() {
             <Box>
               <Input>
                 <InputField
-                  placeholder="Your routineObject message"
+                  placeholder="Your routine message"
                   value={message}
                   onChange={handleMessageChange}
                 />
