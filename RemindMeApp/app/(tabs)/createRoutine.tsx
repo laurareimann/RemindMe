@@ -193,7 +193,7 @@ export default function createRoutine() {
           variant="solid"
           size="md"
           onPress={async () => {
-            const response: Routine = await uploadRoutine({
+            const response = await uploadRoutine({
               message: message,
               repeat: repeat,
               weather: activeWeather,
