@@ -1,9 +1,3 @@
-import {
-  CalendarDaysIcon,
-  DownloadIcon,
-  LucideIcon,
-  MessageCircleIcon,
-} from "lucide-react-native";
 
 // ==> Components (useState value and function)
 export type CustomComponentProps<T> = {
@@ -13,7 +7,6 @@ export type CustomComponentProps<T> = {
 
 // ==> Routine Parts
 //chooseDays.tsx
-// todo: austauschen!
 export type ActiveDays = {
   Mo: boolean;
   Tu: boolean;
@@ -32,7 +25,6 @@ export type RepeatState = {
 };
 
 // chooseTemperature.tsx
-// temperature: number <= todo
 export type ActiveMinMaxTemp = {
   min: boolean;
   max: boolean;
