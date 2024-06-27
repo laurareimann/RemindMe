@@ -1,4 +1,4 @@
-import { RoutinePlanned } from '@/types/routine';
+import { Routine, RoutinePlanned } from '@/types/routine';
 import { initializeApp } from 'firebase/app';
 import { DocumentData, getFirestore } from 'firebase/firestore';
 import { doc, addDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
@@ -29,7 +29,7 @@ export const getAllRoutines = async () => {
     }
 }
 
-export const uploadRoutine = async (routine: any) => {
+export const uploadRoutine = async (routine: Routine) => {
     // setLoading(true);
     try {
         const response = await addDoc(collection(db, "routines"), routine);
