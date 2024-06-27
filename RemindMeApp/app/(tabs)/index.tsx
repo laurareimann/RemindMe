@@ -1,117 +1,44 @@
-import { getAllRoutines } from "@/api/database-core";
+import { fetchRoutines, getAllRoutines } from "@/api/database-core";
 import PlannedRoutineAccordion from "@/custom-components/plannedRoutineAccordion";
 import PageView from "@/custom-components/templates";
-import { RoutineDbCall } from "@/types/routine";
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { Routine, RoutineDbCall } from "@/types/routine";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { DocumentData, collection, getDocs, getFirestore } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import {
-  Box,
-  Button,
-  Heading,
-  ScrollView,
-  Text
-} from "../../components";
+import { Box, Button, Heading, ScrollView, Text } from "../../components";
 
 type RootStackParamList = {
-  'index': undefined;
-  'api-demo': undefined;
+  index: undefined;
+  "api-demo": undefined;
 };
 
-const initialRoutineDbCalls: RoutineDbCall[] = [
-  {
-    id: 1,
-    routineData: {
-      isActive: true,
-      message: "First sample routine message",
-      repeat: {
-        frequency: "daily",
-        date: new Date(),
-        days: {
-          Mo: true,
-          Tu: false,
-          We: true,
-          Th: false,
-          Fr: true,
-          Sa: false,
-          Su: false,
-        },
-      },
-      weather: {
-        location: "Berlin",
-        activeWeather: {
-          sun: true,
-          hail: false,
-          lightning: false,
-          snow: true,
-        },
-      },
-      temperature: {
-        temp: 22,
-        activeButtons: {
-          min: true,
-          max: false,
-        },
-      },
-    },
-  },
-  {
-    id: 2,
-    routineData: {
-      isActive: false,
-      message: "Second sample routine message",
-      repeat: {
-        frequency: "weekly",
-        date: new Date(),
-        days: {
-          Mo: false,
-          Tu: true,
-          We: false,
-          Th: true,
-          Fr: false,
-          Sa: true,
-          Su: true,
-        },
-      },
-      weather: {
-        location: "Munich",
-        activeWeather: {
-          sun: false,
-          hail: true,
-          lightning: true,
-          snow: false,
-        },
-      },
-      temperature: {
-        temp: 18,
-        activeButtons: {
-          min: false,
-          max: true,
-        },
-      },
-    },
-  },
-  // Weitere Objekte können hinzugefügt werden
-];
-
 export default function TabOneScreen() {
-  const [routines, setRoutines] = useState<RoutineDbCall[]>(initialRoutineDbCalls);
+  const [routines, setRoutines] = useState<RoutineDbCall[]>([]);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const [newRoutines, setNewRoutines] = useState<any>(null);
+  const [newRoutines, setNewRoutines] = useState<DocumentData[]>();
 
   useEffect(() => {
-    getAllRoutines().then((routines) => {
-      setNewRoutines(routines);
-      console.log('routines', routines);
-    });
-  }, [])
+    const loadRoutines = async () => {
+      try {
+        const fetchedRoutines = await fetchRoutines();
+        setRoutines(fetchedRoutines);
+      } catch (error) {
+        console.error('Error loading routines: ', error);
+      }
+    };
+
+    loadRoutines();
+  }, []);
 
   const handleSwitchToggle = (index: number) => {
     // Use the map function to create a new array of routines with the updated isActive value
     const updatedRoutines = routines.map((routine, i) =>
       // Check if the current routine's index matches the index of the toggled switch
-      i === index ? { ...routine, isActive: !routine.routineData.isActive } : routine
+      i === index
+        ? { ...routine, isActive: !routine.routineData.isActive }
+        : routine
     );
     // Update the state with the new array of routines
     setRoutines(updatedRoutines);
@@ -147,7 +74,6 @@ export default function TabOneScreen() {
               <PlannedRoutineAccordion
                 key={routine.id}
                 routine={routine}
-                routineIndex={index}
                 handleSwitchToggle={() => handleSwitchToggle(index)}
                 handleDeleteRoutine={() => handleDeleteRoutine(index)}
               />
@@ -161,8 +87,8 @@ export default function TabOneScreen() {
           variant="solid"
           size="md"
           onPress={() => {
-            console.log('Button new Routine Pressed');
-            navigation.navigate('api-demo');
+            console.log("Button new Routine Pressed");
+            navigation.navigate("api-demo");
           }}
         >
           <Text bg="black">Create New Routine</Text>
@@ -172,12 +98,11 @@ export default function TabOneScreen() {
           variant="solid"
           size="md"
           onPress={() => {
-            getAllRoutines().then((routines) => {
-              setNewRoutines(routines);
-              console.log('routines', routines);
+            fetchRoutines().then((routines) => {
+              setRoutines(routines);
+              console.log("routines", routines);
             });
-          }
-        }
+          }}
         >
           <Text bg="black">Refresh</Text>
         </Button>

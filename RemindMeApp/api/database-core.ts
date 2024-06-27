@@ -1,4 +1,4 @@
-import { Routine, RoutinePlanned } from '@/types/routine';
+import { RepeatState, Routine, RoutineDbCall } from '@/types/routine';
 import { initializeApp } from 'firebase/app';
 import { DocumentData, getFirestore } from 'firebase/firestore';
 import { doc, addDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
@@ -28,6 +28,37 @@ export const getAllRoutines = async () => {
         return false;
     }
 }
+
+export const fetchRoutines = async (): Promise<RoutineDbCall[]> => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "routines"));      const fetchedRoutines: RoutineDbCall[] = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        routineData: convertToRoutine(doc.data()), // Konvertierung der Firebase-Daten
+      }));
+      return fetchedRoutines;
+    } catch (error) {
+      console.error('Error fetching routines: ', error);
+      throw error;
+    }
+  };
+
+  const convertToRoutine = (data: any): Routine => {
+    const repeat: RepeatState = {
+      frequency: data.repeat.frequency,
+      date: data.repeat.date.toDate(), //Konvertierung zurück in Date-Objekt
+      days: data.repeat.days,
+    };
+  
+    const routine: Routine = {
+      isActive: data.isActive,
+      message: data.message,
+      repeat: repeat,
+      weather: data.weather,
+      temperature: data.temperature,
+    };
+  
+    return routine;
+  };
 
 export const uploadRoutine = async (routine: Routine) => {
     // setLoading(true);

@@ -59,8 +59,84 @@ export type Routine = {
 };
 
 export type RoutineDbCall ={
-  id: number
+  id: string
   routineData: Routine
 }
 
 
+// ---
+const initialRoutineDbCalls: RoutineDbCall[] = [
+  {
+    id: "1",
+    routineData: {
+      isActive: true,
+      message: "First sample routine message",
+      repeat: {
+        frequency: "daily",
+        date: new Date(),
+        days: {
+          Mo: true,
+          Tu: false,
+          We: true,
+          Th: false,
+          Fr: true,
+          Sa: false,
+          Su: false,
+        },
+      },
+      weather: {
+        location: "Berlin",
+        activeWeather: {
+          sun: true,
+          hail: false,
+          lightning: false,
+          snow: true,
+        },
+      },
+      temperature: {
+        temp: 22,
+        activeButtons: {
+          min: true,
+          max: false,
+        },
+      },
+    },
+  },
+  {
+    id: "2",
+    routineData: {
+      isActive: false,
+      message: "Second sample routine message",
+      repeat: {
+        frequency: "weekly",
+        date: new Date(),
+        days: {
+          Mo: false,
+          Tu: true,
+          We: false,
+          Th: true,
+          Fr: false,
+          Sa: true,
+          Su: true,
+        },
+      },
+      weather: {
+        location: "Munich",
+        activeWeather: {
+          sun: false,
+          hail: true,
+          lightning: true,
+          snow: false,
+        },
+      },
+      temperature: {
+        temp: 18,
+        activeButtons: {
+          min: false,
+          max: true,
+        },
+      },
+    },
+  },
+  // Weitere Objekte können hinzugefügt werden
+];

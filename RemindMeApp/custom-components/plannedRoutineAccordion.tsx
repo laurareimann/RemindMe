@@ -20,22 +20,21 @@ import {
   VStack,
   View,
 } from "@/components";
-import { RoutineDbCall, RoutinePlanned } from "@/types/routine";
+import { RoutineDbCall } from "@/types/routine";
 import React from "react";
 import ChooseTime from "./chooseTime";
 import ChooseDays from "./chooseDays";
 
 type PlannedRoutineAccordionProps = {
   routine: RoutineDbCall;
-  routineIndex: number;
-  handleSwitchToggle: (index: number) => void;
-  handleDeleteRoutine: (index: number) => void;
+  handleSwitchToggle: (index: string) => void;
+  handleDeleteRoutine: (index: string) => void;
 };
 
 export default function PlannedRoutineAccordion(
   props: PlannedRoutineAccordionProps
 ) {
-  const { routineIndex, routine, handleSwitchToggle, handleDeleteRoutine } =
+  const { routine, handleSwitchToggle, handleDeleteRoutine } =
     props;
 
   const hours = routine.routineData.repeat.date
@@ -66,14 +65,14 @@ export default function PlannedRoutineAccordion(
   return (
     <View>
       <Accordion
-        key={routineIndex}
+        key={routine.id}
         m="$2.5"
         width="90%"
         size="md"
         variant="filled"
         type="single"
       >
-        <AccordionItem value={routineIndex.toString()}>
+        <AccordionItem value={routine.id.toString()}>
           <AccordionHeader>
             <AccordionTrigger>
               {({ isExpanded }) => {
@@ -98,7 +97,7 @@ export default function PlannedRoutineAccordion(
                       size="sm"
                       value={routine.routineData.isActive}
                       onToggle={() =>
-                        handleSwitchToggle(routineIndex)
+                        handleSwitchToggle(routine.id)
                       } /* todo: onToggle={} ... manipulate isActive value */
                     />
                   </>
@@ -205,7 +204,7 @@ export default function PlannedRoutineAccordion(
                   >
                     <Button
                       variant="link"
-                      onPress={() => handleDeleteRoutine(routineIndex)}
+                      onPress={() => handleDeleteRoutine(routine.id)}
                     >
                       <Icon as={TrashIcon} color="red" />
                     </Button>
