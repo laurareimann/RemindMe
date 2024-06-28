@@ -30,7 +30,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Homes',
+          title: 'Home',
           tabBarIcon: ({ color }) => <TabBarIcon name="bell" color={color} />,
         }}
         />
@@ -44,8 +44,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="firestore-demo"
         options={{
-          title: 'Firestore Demo',
-          tabBarIcon: ({ color }) => <TabBarIcon name="pencil-square" color={color} />,
+          title: 'Routines Database',
+          tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
         }}
       />
       <Tabs.Screen
