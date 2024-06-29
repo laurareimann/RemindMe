@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import ChooseDays from "./chooseDays";
-import { RepeatState } from "@/types/routine";
+import { ActiveDays, RepeatState } from "@/types/routine";
 
 type showRepeatProps = {
   repeatValues: RepeatState;
@@ -33,19 +33,23 @@ export default function ShowRepeat(props: showRepeatProps) {
   };
 
   const days = () => {
+    const weekDaysOrder = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+    
+    const sortedDays = Object.keys(repeatValues.days)
+      .filter(day => repeatValues.days[day])  // keine ahnung wie man das fixet
+      .sort((a, b) => weekDaysOrder.indexOf(a) - weekDaysOrder.indexOf(b));  // Sort the remaining days
+  
     return (
-        // hier gerne noch einfach wollte nur schnell was ausprobieren
-      <ChooseDays
-        value={{
-          frequency: "weekly",
-          date: new Date(),
-          days: repeatValues.days,
-        }}
-        setValue={() => {}}
-      />
+      <Text>
+        {sortedDays.map((day) => (
+          day ? `${day} ` : null
+        ))}
+      </Text>
     );
   };
-
+  
+  
+  
   switch (repeatValues.frequency) {
     case "daily":
       return (

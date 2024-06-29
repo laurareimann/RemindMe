@@ -37,12 +37,13 @@ export default function TabOneScreen() {
     const updatedRoutines = routines.map((routine, i) =>
       // Check if the current routine's index matches the index of the toggled switch
       i === index
-        ? { ...routine, isActive: !routine.routineData.isActive }
+        ? { ...routine, routineData: { ...routine.routineData, isActive: !routine.routineData.isActive } }
         : routine
     );
     // Update the state with the new array of routines
     setRoutines(updatedRoutines);
   };
+
   const handleDeleteRoutine = (index: number) => {
     Alert.alert(
       "Delete Routine",
@@ -64,6 +65,7 @@ export default function TabOneScreen() {
       { cancelable: false }
     );
   };
+
   return (
     <PageView>
       <Box pt="$5" flex={1}>
