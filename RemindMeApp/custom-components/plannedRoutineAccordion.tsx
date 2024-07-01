@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTitleText,
   AccordionTrigger,
+  Box,
   Button,
   ChevronDownIcon,
   ChevronUpIcon,
@@ -17,23 +18,27 @@ import {
   Text,
   TrashIcon,
   VStack,
-  View
+  View,
 } from "@/components";
-import { RoutinePlanned } from "@/types/routine";
+import { RoutineDbCall } from "@/types/routine";
 import React from "react";
+import ChooseTime from "./chooseTime";
+import ChooseDays from "./chooseDays";
+import ShowRepeat from "./showRepeat";
 
 type PlannedRoutineAccordionProps = {
-  routine: RoutinePlanned;
-  routineIndex: number;
-  handleSwitchToggle: (index: number) => void;
-  handleDeleteRoutine: (index: number) => void;
+  routine: RoutineDbCall;
+  handleSwitchToggle: (index: string) => void;
+  handleDeleteRoutine: (index: string) => void;
 };
 
 export default function PlannedRoutineAccordion(
   props: PlannedRoutineAccordionProps
 ) {
-  const { routineIndex, routine, handleSwitchToggle, handleDeleteRoutine } =
+  const { routine, handleSwitchToggle, handleDeleteRoutine } =
     props;
+
+
 
   const formatWeekdays = (days: { [key: string]: boolean }) => {
     return Object.keys(days)
@@ -45,23 +50,25 @@ export default function PlannedRoutineAccordion(
   return (
     <View>
       <Accordion
-        key={routineIndex}
+        key={routine.id}
         m="$2.5"
         width="90%"
         size="md"
         variant="filled"
         type="single"
       >
-        <AccordionItem value={routineIndex.toString()}>
+        <AccordionItem value={routine.id.toString()}>
           <AccordionHeader>
             <AccordionTrigger>
               {({ isExpanded }) => {
-                const statefulColor = routine.isActive ? "black" : "grey";
+                const statefulColor = routine.routineData.isActive
+                  ? "black"
+                  : "grey";
                 return (
                   <>
-                    <Icon as={routine.icon} mr="$1.5" color={statefulColor} />
+                    {/* <Icon as={routine.routineData.icon} mr="$1.5" color={statefulColor} /> */}
                     <AccordionTitleText color={statefulColor}>
-                      {routine.message}
+                      {routine.routineData.message}
                     </AccordionTitleText>
                     {isExpanded ? (
                       <AccordionIcon as={ChevronUpIcon} color={statefulColor} />
@@ -73,9 +80,9 @@ export default function PlannedRoutineAccordion(
                     )}
                     <Switch
                       size="sm"
-                      value={routine.isActive}
+                      value={routine.routineData.isActive}
                       onToggle={() =>
-                        handleSwitchToggle(routineIndex)
+                        handleSwitchToggle(routine.id)
                       } /* todo: onToggle={} ... manipulate isActive value */
                     />
                   </>
@@ -87,27 +94,32 @@ export default function PlannedRoutineAccordion(
             <VStack space="sm" p={3}>
               {/* Repeats Section */}
               {/* Todo: ReWork this here */}
-              <HStack justifyContent="space-between" space="sm" flexDirection="column">
+              <HStack
+                justifyContent="space-between"
+                space="sm"
+                flexDirection="column"
+              >
                 <HStack justifyContent="space-between">
                   {/* Time and Weekdays */}
-                  <HStack justifyContent="space-between" alignItems="center" space="sm">
+                  <HStack
+                    justifyContent="space-between"
+                    alignItems="center"
+                    space="sm"
+                  >
                     <HStack alignItems="center" space="sm">
-                      <Icon as={ClockIcon} size="sm" color="black" />
-                      <HStack flexDirection="column">
-                        <Text>
-                          {Array.isArray(routine.Repeats.time)
-                            ? routine.Repeats.time.join(", ")
-                            : routine.Repeats.time}
-                        </Text>
-                        <Text>
-                          {formatWeekdays(routine.Repeats.days)}
-                        </Text>
-                      </HStack>
+                      <ShowRepeat repeatValues={routine.routineData.repeat}/>
                     </HStack>
                   </HStack>
                   {/* Trash Icon */}
-                  <HStack justifyContent="flex-end" alignItems="flex-start" space="sm">
-                    <Button variant="link" onPress={() => handleDeleteRoutine(routineIndex)}>
+                  <HStack
+                    justifyContent="flex-end"
+                    alignItems="flex-start"
+                    space="sm"
+                  >
+                    <Button
+                      variant="link"
+                      onPress={() => handleDeleteRoutine(routine.id)}
+                    >
                       <Icon as={TrashIcon} color="red" />
                     </Button>
                   </HStack>
@@ -115,19 +127,24 @@ export default function PlannedRoutineAccordion(
 
                 {/* Weather Section */}
                 <HStack justifyContent="space-between">
-                  <HStack justifyContent="space-between" alignItems="center" space="sm">
+                  <HStack
+                    justifyContent="space-between"
+                    alignItems="center"
+                    space="sm"
+                  >
                     <HStack alignItems="center" space="sm">
                       <Icon as={SunIcon} size="sm" color="black" />
                       <HStack flexDirection="column">
-                        <Text>
-                          {Array.isArray(routine.weather.weatherConditions)
-                            ? routine.weather.weatherConditions.join(", ")
-                            : routine.weather.weatherConditions}
-                        </Text>
+                        {/* ToDo: show conditions? */}
+                        {/* <Text>
+                          {routine.routineData.weather.activeWeather.hail }
+                        </Text> */}
                         {/* Temperature Section */}
                         <Text>
-                          {routine.temperature.isMin ? "min" : "max"}{" "}
-                          {routine.temperature.celsius}°C
+                          {routine.routineData.temperature.activeButtons
+                            ? "min"
+                            : "max"}{" "}
+                          {routine.routineData.temperature.temp}°C
                         </Text>
                       </HStack>
                     </HStack>
