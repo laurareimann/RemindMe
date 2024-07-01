@@ -82,7 +82,6 @@ export default function TabTwoScreen() {
   return (
     <PageView>
       <View style={styles.container}>
-        <Text size="lg">Weather</Text>
         <Card p="$10" m="$5">
           {Object.entries(data).map(([key, value], index) => (
             <View key={index}>
