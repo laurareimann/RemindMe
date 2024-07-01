@@ -11,12 +11,12 @@ import { doc, addDoc, collection, getDocs, deleteDoc } from "firebase/firestore"
 import React from "react";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCnht2-k29OLuuADU_H5i5mEorwIOFNX5Y",
-  authDomain: "remind-me-76b5b.firebaseapp.com",
-  projectId: "remind-me-76b5b",
-  storageBucket: "remind-me-76b5b.appspot.com",
-  messagingSenderId: "450967273921",
-  appId: "1:450967273921:web:da2e889b8fba03a43bef40"
+  apiKey: process.env.FIRE_KEY,
+  authDomain: process.env.FIRE_AUTH_DOMAIN,
+  projectId: process.env.FIRE_PROJECT_ID,
+  storageBucket: process.env.FIRE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIRE_MESSAGING_SENDER_ID,
+  appId: process.env.FIRE_APP_ID,
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -52,7 +52,9 @@ export default function TabOneScreen() {
       });
       setDocuments(entrys);
       setLoading(false);
+      console.log("Documents successfully fetched!", entrys);
     } catch (e) {
+      console.error("Error getting documents: ", e);
       setLoading(false);
     }
   }
@@ -67,7 +69,9 @@ export default function TabOneScreen() {
         born: 1912
       });
       setLoading(false);
+      console.log("Document successfully written!");
     } catch (e) {
+      console.error("Error adding document: ", e);
       setLoading(false);
     }
   };
