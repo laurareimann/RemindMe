@@ -16,7 +16,7 @@ import ChooseTemperature from "@/custom-components/chooseTemperature";
 import ChooseTime from "@/custom-components/chooseTime";
 import ChooseWeather from "@/custom-components/chooseWeather";
 import PageView from "@/custom-components/templates";
-import { RepeatState, TempState, WeatherState } from "@/types/routine";
+import { RepeatState, Routine, TempState, WeatherState } from "@/types/routine";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { uploadRoutine } from "@/api/database-core";
 import React, { useState } from "react";
@@ -123,7 +123,7 @@ export default function createRoutine() {
             {repeat.frequency === "weekly" && (
               <Box>
                 <Box paddingBottom={"$2"}>
-                  <ChooseDays value={repeat} setValue={setRepeat} value={repeat} setValue={setRepeat}/>
+                  <ChooseDays value={repeat} setValue={setRepeat} />
                 </Box>
                 <Box>
                   <ChooseTime showDateButton={false} showTimeButton={true} value={repeat} setValue={setRepeat}/>
@@ -193,12 +193,12 @@ export default function createRoutine() {
           variant="solid"
           size="md"
           onPress={async () => {
-            const response: any = await uploadRoutine({
+            const response = await uploadRoutine({
               message: message,
               repeat: repeat,
               weather: activeWeather,
               temperature: tempState,
-              setActive: true,
+              isActive: true,
             });
             navigation.navigate("index");
             console.log(response);
