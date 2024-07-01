@@ -42,13 +42,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="firestore-demo"
-        options={{
-          title: 'Routines Database',
-          tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
-        }}
-      />
-      <Tabs.Screen
         name="createRoutine"
         options={{
           title: 'Create Routine',

@@ -90,7 +90,7 @@ export default function TabOneScreen() {
           size="md"
           onPress={() => {
             console.log("Button new Routine Pressed");
-            navigation.navigate("api-demo");
+            navigation.navigate("createRoutine" as "index");
           }}
         >
           <Text bg="black">Create New Routine</Text>
